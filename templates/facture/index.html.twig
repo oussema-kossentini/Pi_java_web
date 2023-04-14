@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facture index{% endblock %}
+
+{% block body %}
+    <h1>Facture</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cin</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Ville</th>
+                <th>Date</th>
+                <th>Prix</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for facture in factures %}
+            <tr>
+                <td>{{ facture.id }}</td>
+                <td>{{ facture.cin }}</td>
+                <td>{{ facture.nom }}</td>
+                <td>{{ facture.prenom }}</td>
+                <td>{{ facture.ville }}</td>
+                <td>{{ facture.date ? facture.date|date('Y-m-d') : '' }}</td>
+                <td>{{ facture.prix }}</td>
+                <td>{{ facture.status }}</td>
+                <td>
+                    <a href="{{ path('app_facture_show', {'id': facture.id}) }}" class="btn btn-outline-primary">show</a>
+                    <a href="{{ path('app_facture_edit', {'id': facture.id}) }}" class="btn btn-outline-primary">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_facture_new') }}" class="btn btn-outline-primary">Create new</a>
+{% endblock %}
