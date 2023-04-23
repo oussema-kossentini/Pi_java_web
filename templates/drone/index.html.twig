@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Drone {% endblock %}
+
+{% block body %}
+    <h1>Drone : ({{ drone.getTotalItemCount }})</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(drone, 'ID','drone.id')}}</th>
+                <th>{{ knp_pagination_sortable(drone, 'Matricule','drone.matricule')}}</th>
+                <th>{{ knp_pagination_sortable(drone, 'Type','drone.type')}}</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for drone in drone %}
+            <tr>
+                <td>{{ drone.id }}</td>
+                <td>{{ drone.matricule }}</td>
+                <td>{{ drone.type }}</td>
+                <td>
+                    <a href="{{ path('app_drone_show', {'id': drone.id}) }}">show</a>
+                    <a href="{{ path('app_drone_edit', {'id': drone.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+     <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+    </style>
+    {{ knp_pagination_render(drone) }}
+    <a href="{{ path('app_drone_new') }}">Create new</a>
+{% endblock %}

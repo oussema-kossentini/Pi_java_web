@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Drone{% endblock %}
+
+{% block body %}
+    <h1>Edit Drone</h1>
+
+    {{ include('drone/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_drone_index') }}">back to list</a>
+
+    {{ include('drone/_delete_form.html.twig') }}
+{% endblock %}

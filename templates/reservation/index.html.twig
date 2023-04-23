@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Reservation {% endblock %}
+
+{% block body %}
+    
+    <h1>Reservation : </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(reservation, 'ID','reservation.id')}}</th>
+                <th>{{ knp_pagination_sortable(reservation, 'Cin','reservation.cin')}}</th>
+                <th>{{ knp_pagination_sortable(reservation, 'Nom','reservation.nom')}}</th>
+                <th>{{ knp_pagination_sortable(reservation, 'Prenom','reservation.prenom')}}</th>
+                <th>{{ knp_pagination_sortable(reservation, 'Ville','reservation.ville')}}</th>
+                <th>{{ knp_pagination_sortable(reservation, 'Num_tel','reservation.num_tel')}}</th>
+                <th>{{ knp_pagination_sortable(reservation, 'Adresse_m','reservation.adreese_m')}}</th>
+                <th>{{ knp_pagination_sortable(reservation, 'Date livraison','reservation.date_livraison')}}</th>
+                <th>{{ knp_pagination_sortable(reservation, 'Type produit','reservation.type_produit')}}</th>
+                <th>{{ knp_pagination_sortable(reservation, 'Lieu depart','reservation.lieu_depart')}}</th>
+                <th>{{ knp_pagination_sortable(reservation, 'Lieu arrivee','reservation.lieu_arrivee')}}</th>
+                <th>{{ knp_pagination_sortable(reservation, 'Poids','reservation.poids')}}</th>
+                <th>Drone</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservation %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.cin }}</td>
+                <td>{{ reservation.nom }}</td>
+                <td>{{ reservation.prenom }}</td>
+                <td>{{ reservation.ville }}</td>
+                <td>{{ reservation.numTel }}</td>
+                <td>{{ reservation.adresseM }}</td>
+                <td>{{ reservation.dateLivraison ? reservation.dateLivraison|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ reservation.typeProduit }}</td>
+                <td>{{ reservation.lieuDepart }}</td>
+                <td>{{ reservation.lieuArrivee }}</td>
+                <td>{{ reservation.poids }}</td>
+                <td>{{ reservation.drone }}</td>
+                <td>
+                    <a href="{{ path('app_reservation_show', {'id': reservation.id}) }} "class="btn btn-primary">show</a>
+                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}"class="btn btn-primary">edit</a>
+                    
+                     
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+                
+        </tbody>
+    </table>
+    
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+    </style>
+    
+    
+    <div class="navigation text-center">
+    {{ knp_pagination_render(reservation) }}
+    </div>
+    
+{% endblock %}
+

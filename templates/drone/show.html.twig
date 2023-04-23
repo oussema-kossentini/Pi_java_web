@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Drone{% endblock %}
+
+{% block body %}
+    <h1>Drone</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ drone.id }}</td>
+            </tr>
+            <tr>
+                <th>Matricule</th>
+                <td>{{ drone.matricule }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ drone.type }}</td>
+            </tr>
+        </tbody>
+    </table>
+     <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+    </style>
+    <a href="{{ path('app_drone_index') }}">back to list</a>
+
+    <a href="{{ path('app_drone_edit', {'id': drone.id}) }}">edit</a>
+
+    {{ include('drone/_delete_form.html.twig') }}
+{% endblock %}
