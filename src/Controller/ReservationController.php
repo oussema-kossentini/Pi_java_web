@@ -34,6 +34,53 @@ public function index(Request $request, ReservationRepository $reservationReposi
     ]);
 }
 
+
+    #[Route('/generate-pdf', name: 'app_reservation_generate_pdf', methods: ['GET'])]
+public function generatePdf(ReservationRepository $reservationRepository): Response
+{
+    // Récupération des données de la base de données
+    $reservations = $reservationRepository->findAll();
+
+    $reservationData = [];
+
+    foreach ($reservations as $reservation) {
+        $reservationData[] = [
+            'id' => $reservation->getId(),
+            'cin' => $reservation->getCin(),
+            'nom' => $reservation->getNom(),
+            'prenom' => $reservation->getPrenom(),
+            'ville' => $reservation->getVille(),
+            'num_tel' => $reservation->getNumtel(),
+            'adresse_m' => $reservation->getAdressem(),
+            'date_livraison' => $reservation->getDatelivraison(),
+            'type_produit' => $reservation->getTypeproduit(),
+            'lieu_depart' => $reservation->getLieudepart(),
+            'lieu_arrivee' => $reservation->getLieuarrivee(),
+            'poids' => $reservation->getPoids()
+            
+            // Ajouter d'autres propriétés si nécessaire
+        ];
+    }
+
+    $html = $this->renderView('reservation/generatepdf.html.twig', [
+        'reservationData' => $reservationData,
+    ]);
+
+    $dompdf = new Dompdf();
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+
+    $pdfContent = $dompdf->output();
+
+    $response = new Response();
+    $response->setContent($pdfContent);
+    $response->headers->set('Content-Type', 'application/pdf');
+    $response->headers->set('Content-Disposition', 'attachment;filename=reservation.pdf');
+
+    return $response;
+}
+
    
     
     

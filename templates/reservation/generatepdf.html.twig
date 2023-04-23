@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block body %}
+
+    <h1>Reservation :</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cin</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Ville</th>
+                <th>Num_tel</th>
+                <th>Adresse_m</th>
+                <th>Date livraison</th>
+                <th>Type produit</th>
+                <th>Lieu depart</th>
+                <th>Lieu arrivee</th>
+                <th>Poids</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservationData %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.cin }}</td>
+                <td>{{ reservation.nom }}</td>
+                <td>{{ reservation.prenom }}</td>
+                <td>{{ reservation.ville }}</td>
+                <td>{{ reservation.num_tel }}</td>
+                <td>{{ reservation.adresse_m }}</td>
+                <td>{{ reservation.date_livraison ? reservation.date_livraison|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ reservation.type_produit }}</td>
+                <td>{{ reservation.lieu_depart }}</td>
+                <td>{{ reservation.lieu_arrivee }}</td>
+                <td>{{ reservation.poids }}</td>
+            </tr>
+            {% else %}
+            
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
+{% endblock %}
