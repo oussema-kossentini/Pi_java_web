@@ -1,0 +1,80 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Client{% endblock %}
+
+{% block body %}
+    <h1>Client</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ user.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse_ma</th>
+                <td>{{ user.adresseMa }}</td>
+            </tr>
+            <tr>
+                <th>Num_tel</th>
+                <td>{{ user.numTel }}</td>
+            </tr>
+            <tr>
+                <th>Date_naissance</th>
+                <td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Mot_de_passe</th>
+                <td>{{ user.password }}</td>
+            </tr>
+        </tbody>
+    </table>
+  {#  {% if user.imageName %}
+    <img src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="{{ user.firstName }} {{ user.lastName }}" width="50" height="50">
+{% else %}
+   <div class="initials-circle" id="initials-circle">
+  <span class="initials">{{ client.getInitials() }}</span>
+</div>
+
+{% endif %}
+#}
+<style>
+.initials-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #000000;
+}
+
+.initials-circle .initials {
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+</style>
+<Script>
+const initialsCircle = document.getElementById('initials-circle');
+const randomColor = Math.floor(Math.random()*16777215).toString(16);
+initialsCircle.style.backgroundColor = '#' + randomColor;
+</Script>
+
+    {# <a href="{{ path('app_client_index') }}">back to list</a> #}
+
+    {#<a href="{{ path('app_client_edit', {'id': client.id}) }}">edit</a> #}
+
+   {{ include('account/_delete_form.html.twig') }}
+{% endblock %}

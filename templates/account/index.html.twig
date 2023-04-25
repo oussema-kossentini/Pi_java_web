@@ -1,0 +1,69 @@
+
+{% extends 'baseback.html.twig' %}
+
+{% block title %}GESTION DES UTILISATEURS{% endblock %}
+{% block body %}
+
+    <h1>Liste des clients</h1> 
+    <hr>
+
+ <style>
+    .my-form1 {
+        display: flex;
+        align-items: center;
+    }
+
+    .my-form1 .form-control {
+        margin-right: 10px;
+    }
+</style>
+
+{{ form_start(form, {'attr': {'class': 'my-form1', 'novalidate': 'novalidate'}}) }}
+
+    {{ form_label(form.searchedby, null, {'label_attr': {'class': 'd-none'}}) }}
+    {{ form_widget(form.searchedby, {'attr': {'class': 'form-control', 'placeholder': 'Search'}}) }}
+    {{ form_widget(form.search, {'attr': {'class': 'btn btn-primary'}}) }}
+
+{{ form_end(form) }}
+
+
+    <table class="table">
+        <thead>
+            <tr>
+            <th>actions</th>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Adresse mail</th>
+                <th>Telephone</th>
+                <th>Date de naissance</th>
+                <th>Mot de passe</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>
+                <a href="{{path('app_show',{'id': user.id})}}" class="btn btn-outline-primary">Show</a>
+               {# <a href="{{path('app_login',{'id': user.id})}}" class="btn btn-outline-primary">Edit</a> #}
+                </td>
+                <td>{{ user.id }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.adresseMa }}</td>
+                <td>{{ user.numTel }}</td>
+                <td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
+                <td>{{ user.password }}</td>
+               
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+   {# <a href="{{ path('app_client_new') }}">Create new</a> #}
+{% endblock %}
