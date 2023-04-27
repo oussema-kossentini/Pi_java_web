@@ -49,7 +49,7 @@
                             <!-- Logo -->
                             <div class="col-xl-2 col-lg-2">
                                 <div class="logo">
-                                    <a href="index.html"><img src="{{asset('FRONT/assets/img/logo/Dronify1 V white.png')}}" alt=""></a>
+                                    <a href="index.html"><img src="{{asset('FRONT/assets/img/logo/Dronify1 V white.png')}}"  alt="..." width="250" height="100"></a>
                                 </div>
                             </div>
                             <div class="col-xl-10 col-lg-10">
@@ -69,7 +69,7 @@
                                                         <li><a href="elements.html">Element</a></li>
                                                     </ul>
                                                 </li>
-                                                <li><a href="contact.html">Contact</a></li>
+                                                <li><a href="{{ path('app_paiement_new' )}}">Paiement</a></li>
                                                 <!-- Header btn -->
                                                 <li>
                                                     <div class="header-right-btn ml-40">
@@ -243,7 +243,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+                            <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
+                            {%block stylesheet%}
+                                <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+                            {%endblock %}
                             {%block body%}
+                            {%endblock%}
+                            {%block javascript%}
+                            <script src="//code.jquery.com/jquery.js"></script>
+                            <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
                             {%endblock%} 
                         </div>
                     </div>
@@ -265,7 +274,7 @@
                                 <div class="single-footer-caption mb-30">
                                     <!-- logo -->
                                     <div class="footer-logo mb-35">
-                                        <a href="index.html"><img src="{{('FRONT/assets/img/logo/Dronify1 V white.png')}}" alt=""></a>
+                                        <a href="index.html"><img src="{{('FRONT/assets/img/logo/Dronify1 V white.png')}}"  alt="..." width="50" height="50"></a>
                                     </div>
                                     <div class="footer-tittle">
                                         <div class="footer-pera">
@@ -385,6 +394,6 @@
     <!-- Jquery Plugins, main Jquery -->	
     <script src="{{asset('FRONT/./assets/js/plugins.js')}}"></script>
     <script src="{{asset('FRONT/./assets/js/main.js')}}"></script>
-    
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 </body>
 </html>

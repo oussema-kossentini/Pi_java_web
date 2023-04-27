@@ -3,10 +3,13 @@
 {% block title %}Facture index{% endblock %}
 
 {% block body %}
-    <h1>Facture</h1>
 
-    <table class="table">
+    <h1>Facture</h1>
+    
+<div id="facture-container">
+    <table class="table"id='myTable'>
         <thead>
+
             <tr>
                 <th>Id</th>
                 <th>Cin</th>
@@ -20,6 +23,7 @@
             </tr>
         </thead>
         <tbody>
+        <input type="search" id="myInput" class="form-control pl-6" placeholder="Search "/><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script><script>$(document).ready(function () {$("#myInput").on("keyup", function () {var value = $(this).val().toLowerCase();$("#myTable tr ").filter(function () {$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)});})});</script>
         {% for facture in factures %}
             <tr>
                 <td>{{ facture.id }}</td>
@@ -42,6 +46,41 @@
         {% endfor %}
         </tbody>
     </table>
+    <style>
+    .btn-primary + .btn-primary {
+      margin-bottom: 10px;
+    }
+  </style>
+    <a href="{{ path('app_facture_new') }}" class="btn btn-primary">Create new</a>
+    <button type="submit" class="btn btn-primary ">Trier par prix</button>
+    <script>
+        $(document).ready(function() {
+            $('#sort-button').on('click', function() {
+                $.ajax({
+                    url: '{{ path('app_facture_sort') }}',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        $('#facture-container').html(response.html);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+    <div class="d-flex justify-content-between ">
+    <form action="{{ path('calculer_total') }}" method="post">
+        <button type="submit" class="btn btn-primary">Calculer le total des revenus</button>
+        <div class="form-group">
+            <label for="total">Total:</label>
+                <input type="text" class="form-contr
+                ol" id="total" name="total" value="{{ total ?? '' }}" readonly>
 
-    <a href="{{ path('app_facture_new') }}" class="btn btn-outline-primary">Create new</a>
+        </div>
+    </form>
+    </div>
+</div>
+ <a href="{{ path('generator_service') }}" class="btn btn-primary px-3 py-1">Export PDF</a>
 {% endblock %}

@@ -1,3 +1,8 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+calculer_total:
+  path: '/calculer-total'
+  controller: 'App\Controller\FactureController::calculerTotal'
+facture_pdf:
+  path: '/facture_pdf'
+  controller: 'App\Controller\FactureController::generatePDF'
+  

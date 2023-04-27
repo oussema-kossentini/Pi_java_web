@@ -1,0 +1,14 @@
+
+
+    <div class="centerdiv">
+ 
+    {{ form_start(form,{'attr':{'novalidate': 'novalidate','class': 'form'}}) }}
+       <h1 class="title">ENVOYER SMS</h1>
+
+<label for="inputText" class ="col-sm-12 col-form-label"> Numéro de téléphone </label> 
+    <div class ="col-sm-12">
+    {{ form_widget(form.number)}}
+    {{ form_errors(form.number ,{'attr':{'class':'text-danger'}})}}
+      {{ form_widget(form.save,{'attr':{'class': 'btn btn-primary' }}) }}<br> 
+
+    </div>

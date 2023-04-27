@@ -21,6 +21,7 @@ class Facture
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
      */
     private $id;
 
@@ -28,6 +29,13 @@ class Facture
      * @var int
      *
      * @ORM\Column(name="Cin", type="integer", nullable=false)
+     * /**
+     * @Assert\NotBlank(
+     * message="Le champs est vide") 
+     * @Assert\Regex(
+     *     pattern="/^\d{8}$/",
+     *     message="Le champ Cin doit contenir exactement 8 chiffres"
+     * )
      */
     private $cin;
 
@@ -35,13 +43,28 @@ class Facture
      * @var string
      *
      * @ORM\Column(name="Nom", type="string", length=100, nullable=false)
+     * /**
+     * @Assert\NotBlank(
+     * message="Le champs est vide")
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z]*$/",
+     *     message="Nom should contain only letters"
+     * )
      */
+    
     private $nom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="Prenom", type="string", length=100, nullable=false)
+     *  @Assert\NotBlank(
+     * message="Le champs est vide")
+     * /**
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z]*$/",
+     *     message="Prenom should contain only letters"
+     * )
      */
     private $prenom;
 
@@ -49,6 +72,12 @@ class Facture
      * @var string
      *
      * @ORM\Column(name="Ville", type="string", length=100, nullable=false)
+     *  @Assert\NotBlank(
+     * message="Le champs est vide")
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z]*$/",
+     *     message="Tu dois choisir une ville"
+     * )
      */
     private $ville;
 
@@ -57,7 +86,8 @@ class Facture
      *
      * @ORM\Column(name="Date", type="date", nullable=false)
      * /**
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     * message="Le champs est vide")
      * @Assert\Type("\DateTime")
      * @Assert\GreaterThanOrEqual("today")
      */
@@ -68,6 +98,8 @@ class Facture
      * @var int
      *
      * @ORM\Column(name="Prix", type="integer", nullable=false)
+     * @Assert\NotBlank(
+     * message="Le champs est vide")
      */
     private $prix;
 
@@ -75,6 +107,8 @@ class Facture
      * @var string|null
      *
      * @ORM\Column(name="Status", type="string", length=20, nullable=true)
+     * @Assert\NotBlank(
+     * message="Le champs est vide")
      */
     private $status;
 
@@ -148,6 +182,7 @@ class Facture
         return $this->prix;
     }
 
+    
     public function setPrix(int $prix): self
     {
         $this->prix = $prix;

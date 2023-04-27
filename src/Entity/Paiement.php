@@ -27,6 +27,8 @@ class Paiement
      * @var string
      *
      * @ORM\Column(name="adresse_m", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(
+     * message="Le champs est vide")
      */
     private $adresseM;
 
@@ -35,7 +37,8 @@ class Paiement
      *
      * @ORM\Column(name="Date", type="date", nullable=false)
      * /**
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     * message="Le champs est vide")
      * @Assert\Type("\DateTime")
      * @Assert\GreaterThanOrEqual("today")
      */
@@ -45,6 +48,13 @@ class Paiement
      * @var int
      *
      * @ORM\Column(name="CVC", type="integer", nullable=false)
+     * /**
+     * @Assert\NotBlank()(
+     * message="Le champs est vide")
+     * @Assert\Regex(
+     *     pattern="/^\d{3}$/",
+     *     message="Le champ CVC doit contenir exactement 3 chiffres"
+     * )
      */
     private $cvc;
 
