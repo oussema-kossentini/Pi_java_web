@@ -1,0 +1,101 @@
+{% extends 'baseFront.html.twig' %}
+{% block stylesheets %}
+    <!-- CSS here -->
+    <link rel="stylesheet" href="../assetsFront/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assetsFront/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../assetsFront/css/slicknav.css">
+    <link rel="stylesheet" href="../assetsFront/css/animate.min.css">
+    <link rel="stylesheet" href="../assetsFront/css/hamburgers.min.css">
+    <link rel="stylesheet" href="../assetsFront/css/magnific-popup.css">
+    <link rel="stylesheet" href="../assetsFront/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../assetsFront/css/themify-icons.css">
+    <link rel="stylesheet" href="../assetsFront/css/themify-icons.css">
+    <link rel="stylesheet" href="../assetsFront/css/slick.css">
+    <link rel="stylesheet" href="../assetsFront/css/nice-select.css">
+    <link rel="stylesheet" href="../assetsFront/css/style.css">
+    <link rel="stylesheet" href="../assetsFront/css/responsive.css">
+    
+    {% endblock %}
+
+        {% block body %}
+           <article class="blog_item">
+                            {% for offre in offres %}   
+                            
+                             <div class="blog_item_img">
+                                    <img class="card-img rounded-0" src="../assetsFront/img/gallery/services7.png" alt="">
+                                    <a href="#" class="blog_item_date">
+                                    {{ offre.remise }} %
+                                
+                                    </a>
+                                    
+                                </div>
+                                <div class="blog_details">
+                                    <a class="d-inline-block" href="">
+                                        <h2 class="blog-head" style="color: #2d2d2d;">Voici la date début et la date fin de cette offre:</h2>
+                                    </a>
+                                    <p>Date Début: {{ offre.dateDebut ? offre.dateDebut|date('d-m-Y') : '' }}</p>
+                                    <p>Date Fin: {{ offre.dateFin ? offre.dateFin|date('d-m-Y') : '' }}</p>
+                                   <p>Nom du sponsor : {{ offre.getNomSponsor }}</p>
+                                   <div class="text-center">
+    <a href="{{ path('app_offre_details', {'idOffre': offre.idOffre}) }}" class="btn btn-primary">Voir les détails</a>
+</div>
+
+
+                                      
+                                </div>
+                            </article>
+    
+        {% endfor %}
+         
+    <div class="blog_details">
+                            
+                            <!-- Pagination -->
+                            <nav class=" Page navigation example justify-content-center  pagination">
+    {{ knp_pagination_render(offres) }}
+</nav>
+
+                        </div>  
+
+
+        {% endblock %}
+           {% block js %}
+
+    <script src="../assetsFront/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="../assetsFront/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="../assetsFront/js/popper.min.js"></script>
+    <script src="../assetsFront/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="../assetsFront/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="../assetsFront/js/owl.carousel.min.js"></script>
+    <script src="../assetsFront/js/slick.min.js"></script>
+    <!-- One Page, Animated-HeadLin -->
+    <script src="../assetsFront/js/wow.min.js"></script>
+    <script src="../assetsFront/js/animated.headline.js"></script>
+    <script src="../assetsFront/js/jquery.magnific-popup.js"></script>
+
+    <!-- Date Picker -->
+    <script src="../assetsFront/js/gijgo.min.js"></script>
+    <!-- Nice-select, sticky -->
+    <script src="../assetsFront/js/jquery.nice-select.min.js"></script>
+    <script src="../assetsFront/js/jquery.sticky.js"></script>
+    
+    <!-- counter , waypoint,Hover Direction -->
+    <script src="../assetsFront/js/jquery.counterup.min.js"></script>
+    <script src="../assetsFront/js/waypoints.min.js"></script>
+    <script src="../assetsFront/js/jquery.countdown.min.js"></script>
+    <script src="../assetsFront/js/hover-direction-snake.min.js"></script>
+
+    <!-- contact js -->
+    <script src="../assetsFront/js/contact.js"></script>
+    <script src="../assetsFront/js/jquery.form.js"></script>
+    <script src="../assetsFront/js/jquery.validate.min.js"></script>
+    <script src="../assetsFront/js/mail-script.js"></script>
+    <script src="../assetsFront/js/jquery.ajaxchimp.min.js"></script>
+    
+    <!-- Jquery Plugins, main Jquery -->	
+    <script src="../assetsFront/js/plugins.js"></script>
+    <script src="../assetsFront/js/main.js"></script>
+    {% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'baseFront.html.twig' %}
+
+
+{% block body %}
+
+  
+
+
+  <!--? Hero Start -->
+ <!--? Blog Area Start -->
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-8 posts-list">
+      <div class="single-post">
+       <div class="feature-img"> 
+       <img class="img-fluid" src="/assetsFront/img/gallery/services7.png" alt="">    </div>
+      <div class="blog_details">
+        <h2 style="color: #2d2d2d;">Bienvenu à nos offre détails
+       </h2>
+       <div class="quote-wrapper">
+         <div class="quotes">
+        Date Début: <br>
+        {{ offre.dateDebut ? offre.dateDebut|date('d-m-Y') : '' }}
+        </div>
+      </div>
+      <br>
+       <div class="quote-wrapper">
+         <div class="quotes">
+        Date Fin: <br>
+        {{ offre.dateFin ? offre.dateFin|date('d-m-Y') : '' }}</div>
+      </div>
+      <br>
+       <div class="quote-wrapper">
+         <div class="quotes">Remise : {{ offre.remise }} %
+         </div>
+      </div>
+      <br>
+       <div class="quote-wrapper">
+         <div class="quotes">Nom du sponsor : {{ offre.getNomSponsor }}
+         </div>
+      </div>  
+      <br>  
+      <div class="quote-wrapper">
+         <div class="quotes">Description du sponsor :<br>
+          {{ offre.getDescriptionSponsor }}
+         </div>
+      </div>                 
+   </div>
+ 
+
+</div>
+</div>
+<div class="col-lg-4">
+<aside class="single_sidebar_widget newsletter_widget">
+
+ <form method="post" action="{{ path('app_participer', {'idOffre': offre.idOffre}) }}">
+<button type="submit" class="btn btn-primary">Participer</button>
+
+ </form>
+
+</aside>
+</div>
+</div>
+{% block offresSimilaires %}
+<div class="container">
+    <h3>Offres similaires</h3>
+           <article class="blog_item">
+                            
+      {% for similar in offresSimilaires %}
+                             <div class="blog_item_img">
+                                    <img class="card-img rounded-0" src="/assetsFront/img/gallery/services7.png" alt="">
+                                    <a href="#" class="blog_item_date">
+                                    {{ similar.remise }} %
+                                
+                                    </a>
+                                    
+                                </div>
+                                <div class="blog_details">
+                                    <a class="d-inline-block" href="">
+                                        <h2 class="blog-head" style="color: #2d2d2d;">Voici la date début et la date fin de cette offre:</h2>
+                                    </a>
+                                    <p><div class="quote-wrapper">
+         <div class="quotes">
+        {{ similar.dateDebut|date('d-m-Y') }} - {{ similar.dateFin|date('d-m-Y') }}</div>
+      </div>
+              
+              </p>
+
+                                   <p>Nom du sponsor : {{ similar.getNomSponsor }}</p>
+                                   <p>Description du sponsor : {{ similar.getDescriptionSponsor }}</p>
+                                   <div class="text-center">
+                  <a href="{{ path('app_offre_details', {'idOffre': similar.idOffre}) }}" class="btn btn-sm btn-outline-secondary">Voir l'offre</a>
+</div>
+</div>
+
+                                      
+                                </div>
+                            </article>
+                            </div>
+    
+      {% endfor %}
+        
+        {% endblock %}
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Blog Area End -->
+
+{% endblock %}

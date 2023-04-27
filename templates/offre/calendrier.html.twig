@@ -1,0 +1,82 @@
+{% extends 'Template.html.twig' %}
+
+        {% block body %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Calendar{% endblock %}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css" integrity="sha256-5veQuRbWaECuYxwap/IOE/DAwNxgm4ikX7nrgsqYp88=" crossorigin="anonymous">
+        {% block stylesheets %}
+        
+    <!-- Custom fonts for this template-->
+    <link href="../Assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../Assets/css/sb-admin-2.min.css" rel="stylesheet">
+        <style>
+            #calendrier{
+                width: 100%;
+                margin: auto;
+            }
+        </style>
+        {% endblock %}
+        
+    </head>
+    
+        
+        <div id="calendrier">
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js" integrity="sha256-YicH/8aE660iEnJtgll3vT54dJApy3XkYmqNfGVFEzA=" crossorigin="anonymous"></script>
+        {% block javascripts %}
+        <script>
+            window.onload = () => {
+                let calendarElt = document.querySelector("#calendrier");
+                let calendar = new FullCalendar.Calendar(calendarElt, {
+                    initialView: 'timeGridWeek',
+                    locale: 'ang',
+                    timeZone: 'Europe/Paris',
+                    headerToolbar: {
+                        start: 'prev,next today',
+                        center: 'title',
+                        end: 'dayGridMonth,timeGridWeek'
+                    },
+                    events: {{ data | raw }},
+                    eventContent: function(info) {
+                        return {
+                            html: '<b>' + info.timeText + '</b><br><i>' + info.event.title + '</i><br><span>' + info.event.extendedProps.description + '</span>'
+                        };
+                    },
+                    eventClick: function(info) {
+  var alertContent = '<div class="alert" role="alert">';
+  alertContent += '<h4 class="alert-heading">Détails de l\'événement</h4>';
+  alertContent += '<p><strong>Début:</strong> ' + info.event.start.toLocaleString() + '</p>';
+  alertContent += '<p><strong>Fin:</strong> ' + info.event.end.toLocaleString() + '</p>';
+  alertContent += '<p><strong>Remise:</strong> ' + info.event.extendedProps.remise + '%</p>';
+  alertContent += '</div>';
+
+  var alertElement = $(alertContent);
+  $('body').append(alertElement);
+}
+                });
+                calendar.render();
+            };
+        </script>
+        
+    <!-- Bootstrap core JavaScript-->
+    <script src="../Assets/vendor/jquery/jquery.min.js"></script>
+    <script src="../Assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../Assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../Assets/js/sb-admin-2.min.js"></script>
+        {% endblock %}
+</html>
+
+        {% endblock %}

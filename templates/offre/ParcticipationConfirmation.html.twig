@@ -1,0 +1,46 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block subject %}Confirmation de participation à l'offre{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <p>Bonjour </p>
+    <p>Nous vous confirmons votre participation à notre offre.
+    <br> Voici les détails:</p>
+   
+    <ul>
+    <div class="quote-wrapper">
+         <div class="quotes">
+        Date Début: <br>
+        {{ offre.dateDebut ? offre.dateDebut|date('d-m-Y') : '' }}
+        </div>
+      </div>
+      <br>
+       <div class="quote-wrapper">
+         <div class="quotes">
+        Date Fin: <br>
+        {{ offre.dateFin ? offre.dateFin|date('d-m-Y') : '' }}</div>
+      </div>
+      <br>
+       <div class="quote-wrapper">
+         <div class="quotes">Remise : {{ offre.remise }} %
+         </div>
+      </div>
+      <br>
+        <div class="quote-wrapper">
+         <div class="quotes">Nom du sponsor : {{ offre.getNomSponsor }}
+         </div>
+      </div>  
+      <br>
+            <div class="quote-wrapper">
+         <div class="quotes">Description du sponsor :<br>
+          {{ offre.getDescriptionSponsor }}
+         </div>
+      </div>                 
+<br>
+        <li>Voici votre QR code de participation:<br> <img src="{{ qrcodes[offre.idOffre] }}" alt="QR code"></li>
+    </ul>
+    
+    <p>L'équipe Dronify vous remercie pour votre participation,</p>
+    </div>
+    {% endblock %}

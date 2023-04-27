@@ -1,0 +1,13 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+
+
+app_offre_front:
+    path: /FrontAffichageOffre
+    controller: App\Controller\OffreController::indexfront
+    methods: GET
+

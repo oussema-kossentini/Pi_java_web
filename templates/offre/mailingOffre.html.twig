@@ -1,0 +1,15 @@
+{% block subject %}Confirmation de participation à l'offre{% endblock %}
+
+{% block body %}
+    <p>Bonjour </p>
+    <p>Nous vous confirmons votre participation à notre offre. Voici les détails:</p>
+   
+    <ul>
+        <li>Date début: {{ offre.dateDebut|date('d/m/Y') }}</li>
+        <li>Date fin: {{ offre.dateFin|date('d/m/Y') }}</li>
+        <li>Remise: {{ offre.remise }}%</li>
+         <p><img src="data:image/png;base64,{{ qrCode.writeDataUri() }}"></p>
+    </ul>
+    
+    <p>Cordialement,</p>
+    {% endblock %}
