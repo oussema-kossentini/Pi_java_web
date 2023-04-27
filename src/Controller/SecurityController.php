@@ -57,6 +57,8 @@ class SecurityController extends AbstractController
     #[Route('/account', name: 'app_account',methods: ['GET', 'POST'])]
     public function index(Request $request, UserRepository $userRepository,EntityManagerInterface $entityManager): Response
     {
+
+        
         $user = $this->getUser();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);

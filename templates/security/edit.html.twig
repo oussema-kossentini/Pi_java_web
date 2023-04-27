@@ -149,16 +149,16 @@
     <h1>Edit Your Profile</h1>
     <div class="profile">
  {% if user.image %}
-  <div class="initials-circle" id="initials-circle">
-    <img class="user-image" id="user-image" src="{{ user.image }}" alt="User Image">
-  </div>
+<div class="profile-image">
+    <img src="{{ asset('pics/' ~ user.image) }}" alt="User Image">
+</div>
 {% else %}
   <div class="initials-circle" id="initials-circle">
     <span class="initials">{{ user.getInitials() }}</span>
   </div>
 {% endif %}
 
-<button class="button" onclick="changeImage()">Photo De Profil</button>
+
 </div>
 <script>
 function changeImage() {
@@ -198,6 +198,12 @@ function changeImage() {
 
 </script>
 <style>
+.profile-image img {
+    border-radius: 50%;
+    width: 150px; /* Adjust the size as needed */
+    height: 150px; /* Adjust the size as needed */
+}
+
 .profile {
   display: flex;
   align-items: center;

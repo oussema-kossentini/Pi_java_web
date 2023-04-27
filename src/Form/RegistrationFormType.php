@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -83,6 +84,20 @@ class RegistrationFormType extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
+        ])
+        ->add('image', FileType::class, [
+            'label' => 'Image',
+            'mapped' => false,
+            'required' => true,
+            'constraints' => [
+                new File([
+                    'maxSize' => '1024k',
+                    'mimeTypes' => [
+                        'image/*',
+                    ],
+                    'mimeTypesMessage' => 'Please upload a valid image file',
+                ])
+            ]
         ])
         ->add('passwordConfirmation', PasswordType::class, [
             'row_attr' => ['class' => 'form-row'],
