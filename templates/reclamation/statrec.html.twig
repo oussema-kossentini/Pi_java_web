@@ -1,0 +1,172 @@
+{% extends 'baseback.html.twig' %}
+
+
+	{% block title %}Reclamation stat{% endblock %}
+	{% block body %}
+	<style>
+		body {
+			background-color: #fff;
+			font-family: Arial, sans-serif;
+		}
+		
+		h1 {
+			color: #0077c0;
+			text-align: center;
+			margin-top: 50px;
+		}
+		
+		.container {
+			width: 80%;
+			margin: auto;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 50px;
+			margin-bottom: 50px;
+		}
+		
+		.card {
+			background-color: #0077c0;
+			color: #fff;
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+			width: 22%;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+		
+		.card h2 {
+			margin-top: 0;
+			font-size: 30px;
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+		
+		.card p {
+			font-size: 18px;
+			margin-bottom: 5px;
+		}
+		
+		.card img {
+			display: block;
+			margin: auto;
+			max-width: 100%;
+			margin-bottom: 10px;
+		}
+	</style>
+</head>
+
+
+
+<body>
+	<h1>Dronify Complaint Statistics</h1>
+	<div class="container">
+		<div class="card">
+			<h2>Livraison</h2>
+			<p id="livraisonCount"></p>
+		</div>
+		<div class="card">
+			<h2>Service</h2>
+			<p id="serviceCount"></p>
+		</div>
+		<div class="card">
+			<h2>Paiement</h2>
+			<p id="paiementCount"></p>
+		</div>
+		<div class="card">
+			<h2>Autre</h2>
+			<p id="autreCount"></p>
+		</div>
+	</div>
+	{% block javascripts %}
+  
+	<script>
+		
+		
+		<script>
+			$(function () {
+				$.ajax({
+					url: "{{ path('app_reclamation_counts') }}",
+					type: "GET",
+					dataType: "json",
+					success: function (data) {
+						var chartData = [];
+						var totalCount = 0;
+						$.each(data, function (type, count) {
+							chartData.push({
+								name: type,
+								y: count
+							});
+							totalCount += count;
+							$('#'+type.toLowerCase()+'Count').html(count+' complaints');
+						});
+						$('#totalCount').html(totalCount+' complaints');
+	
+						Highcharts.chart('chartContainer', {
+							chart: {
+								plotBackgroundColor: null,
+								plotBorderWidth: null,
+								plotShadow: false,
+								type: 'pie'
+							},
+							title: {
+								text: 'Complaint Types Distribution'
+							},
+							tooltip: {
+								pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+							},
+							plotOptions: {
+								pie: {
+									allowPointSelect: true,
+									cursor: 'pointer',
+									dataLabels: {
+										enabled: false
+									},
+									showInLegend: true
+								}
+							},
+							series: [{
+								name: 'Complaints',
+								colorByPoint: true,
+								data: chartData
+							}]
+						});
+					},
+					error: function () {
+						console.log('Error');
+					}
+				});
+			});
+		</script>
+	{% endblock %}
+	
+
+
+
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+
+                            type="text/javascript"></script>
+
+                    <script src="//code.highcharts.com/4.0.1/highcharts.js"></script>
+
+                    <script src="//code.highcharts.com/4.0.1/modules/exporting.js"></script>
+
+                    <script type="text/javascript">
+
+                        {{ chart(chart) }}
+
+                    </script>
+
+                    <div id="piechart" style="min-width: 400px; height: 400px; margin: 0 auto"></div>{# empty
+
+Twig template #}
+</body>
+
+
+
+
+
+</html>
+{% endblock %}

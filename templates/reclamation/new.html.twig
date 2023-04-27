@@ -1,0 +1,76 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}New Reclamation{% endblock %}
+
+
+{% block body %}
+{% if test == true %}
+<h1> You musn't write BAD WORDS  </h1>
+{% endif %}
+                    <div class="col-lg-8">
+                        {{form_start(form,{'attr':{'novalidate':'novalidate' , 'class' : 'user' }})}}
+                        <form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+                            <div class="row">
+                                
+                                <div style="margin-top: 6px;">
+                                    {{ form_label(form.type,"Type Reclamation") }}
+                                    </div>
+                                    {% if form_errors(form.type) is not empty %}
+                                        <div class="alert alert-danger" >
+                                            {{ form_errors(form.type) }}
+                                        </div>
+                                    {% endif %}
+                                
+                                    {{ form_widget(form.type,{ 'attr': {'class' : 'form-control'} }) }}
+                                
+                                      </div>  
+                                <div class="col-sm-6">
+                                <div style="margin-top: 6px; ">
+                                    {{ form_label(form.description,"Description") }}
+                                    </div>
+                                    {% if form_errors(form.description) is not empty %}
+                                        <div class="alert alert-danger" >
+                                            {{ form_errors(form.description) }}
+                                        </div>
+                                    {% endif %}
+                                    
+                                   
+                                    {{ form_widget(form.description,{ 'attr': {'class': 'form-control', 'style': 'height: 350px; width: 300%;'} }) }}
+                                </div>
+                                
+                                  <div style="margin-top: 6px;">
+                                    {{ form_label(form.date,"date") }}
+                                    </div>
+                                    {% if form_errors(form.date) is not empty %}
+                                        <div class="alert alert-danger" >
+                                            {{ form_errors(form.date) }}
+                                        </div>
+                                    {% endif %}
+                                    {{ form_widget(form.date,{ 'attr': {'class': 'form-control ' } }) }}
+                      <hr>
+                                <div style="margin-top: 100px;">
+                                    {{ form_label(form.email,"Email") }}
+                                </div>
+                                {{ form_widget(form.email,{ 'attr': {'class': 'form-control'} }) }}
+                                {% if form_errors(form.email) is not empty %}
+                                    <div class="alert alert-danger" >
+                                        {{ form_errors(form.email) }}
+                                    </div>
+                                {% endif %}
+                            
+            
+                             </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <button type="submit" class="button button-contactForm boxed-btn">{{ button_label|default('Add') }}</button>
+                            </div>
+                            {{ form_end(form) }}
+                        </form>
+
+                    </div>
+                    {% endblock %}
+
+
+
+    
+

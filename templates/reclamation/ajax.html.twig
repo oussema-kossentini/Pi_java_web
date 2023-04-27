@@ -1,0 +1,35 @@
+<table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Email</th>
+                <th>State</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+{% for reclamation in pagination %}
+                <tr>
+                    <td>{{ reclamation.id }}</td>
+                    <td>{{ reclamation.type }}</td>
+                    <td>{{ reclamation.description }}</td>
+                    <td>{{ reclamation.date ? reclamation.date|date('Y-m-d') : '' }}</td>
+                    <td>{{ reclamation.email }}</td>
+                    <td>{{ reclamation.state }}</td>
+                    <td>
+                        <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">Show</a>
+                        <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">No records found</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+    </table>

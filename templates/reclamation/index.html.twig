@@ -1,0 +1,140 @@
+
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Reclamations{% endblock %}
+
+{% block body %}
+
+ <div id="wrapper">
+<link rel="stylesheet" href="{{asset('assets/plugins/morrisjs/morris.css')}}" />
+<script src="{{asset('//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js')}}"></script>
+<link rel="stylesheet" href="{{asset('//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css')}}">
+<script src="{{asset('assets/bundles/morrisscripts.bundle.js')}}"></script> <!-- Morris Plugin Js -->
+                        <div class="container-fluid">
+
+                    <div class ="container">
+                    {% for message in app.flashes('success') %}
+              <div class="alert alert-success"  id="flash-message">{{ message }}</div>
+          {% endfor %}
+          {% for message in app.flashes('danger') %}
+              <div class="alert alert-danger"  id="flash-message">{{ message }}</div>
+          {% endfor %}
+<script>
+    // Set a timer to hide the flash message after 3 seconds
+    setTimeout(function() {
+        var flashMessage = document.getElementById('flash-message');
+        if (flashMessage) {
+            flashMessage.style.display = 'none';
+        }
+    }, 3000);
+</script>
+                        <ul class="navbar-nav ml-auto">
+<li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">3+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Non traitee
+                                </h6>
+                                
+                                {% for reclamation in pagination %}
+                                {% if reclamation.state == "non traitee" %}
+                                <a class="dropdown-item d-flex align-items-center" href="{{ path('app_reponse_new', {'id': reclamation.id}) }}">
+                                    <div class="mr-3">
+
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">{{ reclamation.date ? reclamation.date|date('Y-m-d') : '' }}</div>
+                                        {{ reclamation.description }}
+                                        <div>
+                                            <span class="badge badge-danger">Non traitee</span>
+                                            </div>
+                                    </div>
+                                </a>
+                                {% endif %}
+                                {% else %}
+                                    <div class="small text-gray-500">no records found</div>
+                                {% endfor %}
+                            </div>
+                        </li>
+
+                        </ul>
+                        
+<form action="#" class="nk-form nk-form-style-1" style="margin-top:10px;margin-bottom:20px; margin-left:630px;" novalidate="novalidate">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search for post" id="search">
+
+                        </div>
+                    </form>
+    <h1>Reclamations</h1>
+
+    
+            <div  id="all">
+                    {% include 'reclamation/ajax.html.twig' %}
+                </div>
+                <div class="row vertical-gap" id="search">
+                </div>
+                
+                
+        
+
+    {# {{ knp_pagination_render(pagination) }} #}
+
+    <div>
+
+
+
+
+
+    <a href="{{ path('app_reclamation_new') }}">Create new</a>
+
+    <a href="{{ path('app_rec_date') }}" class="btn btn-secondary ">Trier par date</a>
+    <a href="{{ path('app_rec_type') }}" class="btn btn-secondary ">Trier par type</a>
+    <a href="{{ path('app_reclamation_index277') }}" class="btn btn-secondary ">stat reclamation</a>
+
+    
+    </div>
+    </div>
+                        </div>
+                        </div>
+    <script
+            src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')}}">
+    </script>
+
+    <script>
+        $( document ).ready(function() {
+            var currentRequest = null;
+            $("#search").keyup(function(e){
+                /* La variable value va prendre la valeur insérer dans le champ de texte
+                afin d’effectuer la recherche */
+                var value = $(this).val();
+                if(currentRequest != null) {
+                    currentRequest.abort();
+                }
+                /* Ajax est lancé lors du remplissage du champ texte dont l’id est
+                « search » pour faire la recherche */
+                currentRequest = $.ajax({
+                    url : "{{ path('app_searchrec') }}",
+                    type : 'GET',
+                    data: {
+                        'searchValue' : value
+                    },
+                    success : function(retour)
+                    {
+                        $('#all').html(retour);
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
+{% endblock %}
