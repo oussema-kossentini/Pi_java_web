@@ -51,8 +51,9 @@ if($error->count()>0){
             // do anything else you need here, like send an email
 
          
-        
+          
 
        return new JsonResponse($serializer->serialize(['message'=>'your account has been created'],'json'),Response::HTTP_OK,['accept'=>'application/json'],true);
     }
+    
 }

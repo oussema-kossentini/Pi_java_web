@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 use App\Entity\User;
-use App\Form\LoginType;
+use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Form\RegistrationFormType;
+
 
 
 class HomePageController extends AbstractController
@@ -27,6 +28,24 @@ class HomePageController extends AbstractController
             'controller_name' => 'HomePageController',
         ]);
     }
-   
+    #[Route('/{id}/edit', name: 'app_edit', methods: ['POST', 'GET'])]
+    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    {
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $form->getData();
+            $userRepository->save($user, true);
+            $this->addFlash('success', 'User updated successfully.');
+            return $this->redirectToRoute('app_home_page');
+        }
+    
+        return $this->render('security/edit.html.twig', [
+            'user' => $user,
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+    
    
 }

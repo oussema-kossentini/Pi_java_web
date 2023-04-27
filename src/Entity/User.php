@@ -45,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     private $passwordConfirmation;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function getNom(): ?string
     {
         return $this->nom;
@@ -172,6 +175,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+    public function getInitials(): string
+    {
+        $firstName = substr($this->nom, 0, 1);
+        $lastName = substr($this->prenom, 0, 1);
+    
+        return strtoupper($firstName . $lastName);
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
     }
 
   
