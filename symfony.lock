@@ -59,6 +59,9 @@
             "./config/packages/jms_serializer.yaml"
         ]
     },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v6.2.0"
+    },
     "meteo-concept/hcaptcha-bundle": {
         "version": "3.3",
         "recipe": {
@@ -344,6 +347,9 @@
         "files": [
             "./config/packages/reset_password.yaml"
         ]
+    },
+    "symfonycasts/verify-email-bundle": {
+        "version": "v1.13.0"
     },
     "twig/extra-bundle": {
         "version": "v3.5.1"

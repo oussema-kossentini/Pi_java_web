@@ -64,6 +64,88 @@
         {% endfor %}
         </tbody>
     </table>
+   <div class="pagination">
+  
+ {{ knp_pagination_render(users) }}
+  
+</div>
+
+
+    <style>
+   .pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+.pagination a.active {
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px blue;
+  display: inline-block;
+  text-align: center;
+  line-height: 1;
+}
+
+.pagination a.active:before {
+  content: "";
+  display: block;
+  height: 100%;
+  margin-left: -8px;
+  margin-top: -8px;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+  border-radius: 5px;
+  box-shadow: 0 0 0 2px white, 0 0 0 4px blue;
+}
+
+.pagination ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 12px;
+  text-decoration: none;
+  border-radius: 5px;
+  background-color: white;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+    </style>
 
    {# <a href="{{ path('app_client_new') }}">Create new</a> #}
 {% endblock %}

@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
+        "knplabs/knp-paginator-bundle": "^6.2",
         "meteo-concept/hcaptcha-bundle": "^3.3",
         "nyholm/psr7": "^1.7",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -45,6 +46,7 @@
         "symfony/web-link": "6.2.*",
         "symfony/yaml": "6.2.*",
         "symfonycasts/reset-password-bundle": "^1.17",
+        "symfonycasts/verify-email-bundle": "^1.13",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
         "willdurand/hateoas-bundle": "^2.5"

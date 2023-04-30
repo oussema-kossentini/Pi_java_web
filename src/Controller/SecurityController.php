@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
 
@@ -55,7 +55,7 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
     #[Route('/account', name: 'app_account',methods: ['GET', 'POST'])]
-    public function index(Request $request, UserRepository $userRepository,EntityManagerInterface $entityManager): Response
+    public function index(Request $request, UserRepository $userRepository,EntityManagerInterface $entityManager,PaginatorInterface $paginator): Response
     {
 
         
@@ -88,6 +88,11 @@ class SecurityController extends AbstractController
             ->findAll();
     }
    
+    $users = $paginator->paginate(
+        $users, /* query NOT result */
+        $request->query->getInt('page', 1), /*page number*/  3 /*limit per page*/
+    );
+
     return $this->render('account/index.html.twig', [
         'users' => $users,
 
