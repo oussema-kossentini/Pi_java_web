@@ -53,7 +53,13 @@ class OffreController extends AbstractController
         $offres = $paginator->paginate(
                 $offres, /* query NOT result */
                 $request->query->getInt('page', 1),
-                3
+                3,
+                [
+                    'align' => 'center', // Alignement de la pagination
+                    'size' => 'large', // Taille des boutons
+                    'style' => 'bottom', // Position de la pagination
+                    // Ajoutez d'autres options selon vos besoins
+                ]
             );
             
 
@@ -82,26 +88,29 @@ class OffreController extends AbstractController
             $qrcodeDataUri = $qrcodeService->qrcode($offre->getIdOffre());
             $qrcodes[$offre->getIdOffre()] = $qrcodeDataUri;
 
-        return $this->render('offre/ParcticipationConfirmation.html.twig', [
+        return $this->render('offre/parcticipation.html.twig', [
             'offre' => $offre,
             'qrcodes' => $qrcodes,
         ]);
     }
-   /* 
-    #[Route('/{idOffre}/mailing', name: 'app_participer')]
-    public function participer(Request $request,Offre $offre,MailerInterface $mailer): Response
+   
+    #[Route('/{idOffre}/mailing', name: 'app_mail_participer')]
+    public function participerMail(Request $request,Offre $offre,MailerInterface $mailer,QrcodeService $qrcodeService): Response
     {
         // Créer le contenu de l'email
-   // $qrCodeUrl = $this->generateUrl('offre_qrcode', ['idOffre' => $offre->getIdOffre()], UrlGeneratorInterface::ABSOLUTE_URL);
-    $emailBody = $this->renderView('offre/mailingOffre.html.twig', [
+        $qrcodes = [];
+        
+        $qrcodeDataUri = $qrcodeService->qrcode($offre->getIdOffre());
+        $qrcodes[$offre->getIdOffre()] = $qrcodeDataUri;
+        $emailBody = $this->renderView('offre/participation.html.twig', [
         'offre' => $offre,
-       // 'qrCodeUrl' => $qrCodeUrl,
+        'qrcodes' => $qrcodes,
     ]);
 
     // Créer l'objet Email
     $email = (new Email())
-        ->from('oussema.mahjoubi@esprit.tn')
-        ->to('mahjoubioussema928@gmail.com')
+        ->from('mahjoubioussema928@gmail.com')
+        ->to('oussema.mahjoubi@esprit.tn')
         ->subject('Confirmation de participation à l\'offre')
         ->html($emailBody);
         //->attachFromPath('/path/to/qrcode.png');
@@ -112,7 +121,7 @@ class OffreController extends AbstractController
     return $this->redirectToRoute('of');
 
     }
-*/    
+   
     #[Route('/', name: 'app_offre_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager,QrcodeService $qrcodeService): Response
     {
@@ -201,24 +210,11 @@ class OffreController extends AbstractController
         $offre = new Offre();
         $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
-      /*  $emailBody = $this->renderView('offre/mailingOffre.html.twig', [
-            'offre' => $offre,
-           // 'qrCodeUrl' => $qrCodeUrl,
-        ]);*/
+      
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($offre);
             $entityManager->flush();
-            $email = (new Email())
-            ->from('mahjoubioussema928@gmail.com')
-            ->to('oussema.mahjoubi@esprit.tn')
-            ->subject('Confirmation de participation à l\'offre')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
-            //->attachFromPath('/path/to/qrcode.png');
-            
-    // Envoyer l'email
-    $mailer->send($email);
-
     
 
             return $this->redirectToRoute('app_offre_index', [], Response::HTTP_SEE_OTHER);
