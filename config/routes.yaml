@@ -3,6 +3,7 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+<<<<<<< HEAD
 
 
 
@@ -11,3 +12,5 @@ app_offre_front:
     controller: App\Controller\OffreController::indexfront
     methods: GET
 
+=======
+>>>>>>> 2bd1813 (Add initial set of files)
