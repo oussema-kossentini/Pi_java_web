@@ -217,6 +217,7 @@ class OffreController extends AbstractController
             $entityManager->flush();
     
 
+            
             return $this->redirectToRoute('app_offre_index', [], Response::HTTP_SEE_OTHER);
         }
 
