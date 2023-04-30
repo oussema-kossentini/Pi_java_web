@@ -43,7 +43,7 @@
                                     Non traitee
                                 </h6>
                                 
-                                {% for reclamation in pagination %}
+                                {% for reclamation in rec2 %}
                                 {% if reclamation.state == "non traitee" %}
                                 <a class="dropdown-item d-flex align-items-center" href="{{ path('app_reponse_new', {'id': reclamation.id}) }}">
                                     <div class="mr-3">
@@ -87,7 +87,7 @@
                 
         
 
-    {# {{ knp_pagination_render(pagination) }} #}
+     {{ knp_pagination_render(pagination) }} 
 
     <div>
 

@@ -31,8 +31,9 @@
 			padding: 20px;
 			border-radius: 10px;
 			box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-			width: 22%;
+			width: 50%;
 			margin-bottom: 20px;
+			margin-right 50px;
 			text-align: center;
 		}
 		
@@ -45,7 +46,8 @@
 		
 		.card p {
 			font-size: 18px;
-			margin-bottom: 5px;
+			margin-bottom: 50px;
+			margin-right 20px;
 		}
 		
 		.card img {
@@ -53,6 +55,8 @@
 			margin: auto;
 			max-width: 100%;
 			margin-bottom: 10px;
+			margin-right 20px;
+		
 		}
 	</style>
 </head>
@@ -84,60 +88,7 @@
 	<script>
 		
 		
-		<script>
-			$(function () {
-				$.ajax({
-					url: "{{ path('app_reclamation_counts') }}",
-					type: "GET",
-					dataType: "json",
-					success: function (data) {
-						var chartData = [];
-						var totalCount = 0;
-						$.each(data, function (type, count) {
-							chartData.push({
-								name: type,
-								y: count
-							});
-							totalCount += count;
-							$('#'+type.toLowerCase()+'Count').html(count+' complaints');
-						});
-						$('#totalCount').html(totalCount+' complaints');
-	
-						Highcharts.chart('chartContainer', {
-							chart: {
-								plotBackgroundColor: null,
-								plotBorderWidth: null,
-								plotShadow: false,
-								type: 'pie'
-							},
-							title: {
-								text: 'Complaint Types Distribution'
-							},
-							tooltip: {
-								pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-							},
-							plotOptions: {
-								pie: {
-									allowPointSelect: true,
-									cursor: 'pointer',
-									dataLabels: {
-										enabled: false
-									},
-									showInLegend: true
-								}
-							},
-							series: [{
-								name: 'Complaints',
-								colorByPoint: true,
-								data: chartData
-							}]
-						});
-					},
-					error: function () {
-						console.log('Error');
-					}
-				});
-			});
+		
 		</script>
 	{% endblock %}
 	

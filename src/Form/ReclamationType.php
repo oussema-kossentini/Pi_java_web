@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\HttpFoundation\JsonResponse;
+
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
