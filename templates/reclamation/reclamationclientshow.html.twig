@@ -1,0 +1,105 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}New Reclamation{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .merci-container {
+            display: flex;
+            flex-direction: column; /* Affichage en colonne pour aligner le bouton */
+            justify-content: center;
+            align-items: center;
+            max-height: 400px;
+            max-width: 600px;
+            height: 80vh;
+            background-color: orange;
+            border-radius: 10px;
+        }
+
+        .merci-message {
+            font-size: 3rem;
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 2rem;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .btn-reclamation {
+            background-color: white; /* Couleur de fond */
+            color: orange; /* Couleur du texte */
+            border-color: orange; /* Couleur de la bordure */
+            border-radius: 10px; /* Arrondi de bordure */
+            padding: 10px 20px; /* Espacement du texte */
+            font-size: 1.5rem;
+            margin-top: 1rem; /* Espacement du bouton par rapport au message */
+        }
+
+        .btn-reclamation:hover {
+            background-color: orange;
+            color: white;
+            border-color: white;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div class="merci-container">
+        <div class="merci-message">
+            liste des reclamation de mr x 
+        </div>
+       <br>
+
+    </div>
+
+
+
+
+    <h1>Reclamation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reclamation.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ reclamation.type }}</td>
+            </tr>
+            <br>
+            <br>
+            <tr>
+                <th>Description</th>
+                <td>{{ reclamation.description }}</td>
+                
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ reclamation.date ? reclamation.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ reclamation.email }}</td>
+            </tr>
+           
+        </tbody>
+    </table>
+
+</div>
+<a href="{{ path('app_reclamation_new') }}" onclick="window.location.href=this.getAttribute('href')" class="btn btn-reclamation">Nouvelle Réclamation</a>
+</div>
+
+
+
+
+
+</div>
+
+<a href="{{ path('app_reclamation_reclamationclientemail', {'email': reclamation.getEmail()|url_encode }) }}" onclick="window.location.href=this.getAttribute('href')" class="btn btn-reclamation">mes Réclamation</a>
+
+
+{% endblock %}
