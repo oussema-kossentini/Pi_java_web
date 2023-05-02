@@ -140,8 +140,131 @@ $ob->series([
         //     'rec1' => $reclamationRepository->findAll(),
         // ]);
     }
+    #[Route('/removestatuttraitee', name: 'app_reclamation_index_remove', methods: ['GET'])]
+    public function removeTraiteeAction(Request $request, PaginatorInterface $paginator,ReclamationRepository $repository): Response
+{
+    $entityManager = $this->getDoctrine()->getManager();
 
+    // Get all reclamations
+    $reclamations = $entityManager->getRepository(Reclamation::class)->findAll();
+
+    // Remove reclamations with state=traitee
+    foreach ($reclamations as $key => $reclamation) {
+        if ($reclamation->getState() == 'traitee') {
+            unset($reclamations[$key]);
+        }
+    }
+
+    // Paginate the remaining reclamations
+    $pagination = $paginator->paginate(
+        $reclamations,
+        $request->query->getInt('page', 1),
+        10
+    );
+
+    // Render the updated list of reclamations
+    return $this->render('reclamation/index.html.twig', [
+        'pagination' => $pagination,
+        'rec1' => $repository->findAll(),
+    ]);
+}
+
+
+
+ 
+// #[Route('/removesall', name: 'app_reclamation_index_removeallrec', methods: ['GET'])]
+// public function removeAll(EntityManagerInterface $em,Request $request, PaginatorInterface $paginator,ReclamationRepository $repo)
+// {
+//     $repo = $em->getRepository(Reclamation::class);
+//     $reclamations = $repo->findAll();
+//     if (count($reclamations) > 1) {
+//         array_splice($reclamations, 1);
+//         foreach ($reclamations as $reclamation) {
+//             $em->remove($reclamation);
+//         }
+//         $em->flush();
+//     }
+//     $this->addFlash('success', 'All reclamations have been deleted except for the first one.');
+
+//     // Paginate the remaining reclamations
+//     $pagination = $paginator->paginate(
+//         $reclamations,
+//         $request->query->getInt('page', 1),
+//         10
+//     );
+//     $entityManager = $this->getDoctrine()->getManager();
+
+//     // Get all reclamations
+//     $reclamations = $entityManager->getRepository(Reclamation::class)->findAll();
+//     return $this->render('reclamation/index.html.twig', [
+//         'pagination' => $pagination,
+//         'rec1' => $repo->findAll(),
+//     ]);
+// }
+
+#[Route('/removesall', name: 'app_reclamation_index_removeallrec', methods: ['GET'])]
+public function removeAll(EntityManagerInterface $em, Request $request, PaginatorInterface $paginator, ReclamationRepository $repo): Response
+{
+    $reclamations = $repo->findAll();
     
+    if (count($reclamations) > 1) {
+        array_splice($reclamations, 1);
+        
+        foreach ($reclamations as $reclamation) {
+            $em->remove($reclamation);
+        }
+        
+        $em->flush();
+    }
+    
+    $this->addFlash('success', 'All reclamations have been deleted except for the first one.');
+
+    // Paginate the remaining reclamations
+    $pagination = $paginator->paginate(
+        $reclamations,
+        $request->query->getInt('page', 1),
+        10
+    );
+
+    return $this->render('reclamation/index.html.twig', [
+        'pagination' => $pagination,
+        'rec1' => $repo->findAll(),
+    ]);
+}
+
+
+
+#[Route('/removestatutnontraitee', name: 'app_reclamation_index_removenon', methods: ['GET'])]
+    public function removenonTraiteeAction(Request $request, PaginatorInterface $paginator,ReclamationRepository $repository): Response
+{
+    $entityManager = $this->getDoctrine()->getManager();
+
+    // Get all reclamations
+    $reclamations = $entityManager->getRepository(Reclamation::class)->findAll();
+
+    // Remove reclamations with state=traitee
+    foreach ($reclamations as $key => $reclamation) {
+        if ($reclamation->getState() == 'non traitee') {
+            unset($reclamations[$key]);
+        }
+    }
+
+    // Paginate the remaining reclamations
+    $pagination = $paginator->paginate(
+        $reclamations,
+        $request->query->getInt('page', 1),
+        10
+    );
+
+    // Render the updated list of reclamations
+    return $this->render('reclamation/index.html.twig', [
+        'pagination' => $pagination,
+        'rec1' => $repository->findAll(),
+    ]);
+}
+
+
+
 
     
     #[Route('/searchreceajax', name: 'app_searchrec', methods: ['GET'])]
