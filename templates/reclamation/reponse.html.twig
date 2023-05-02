@@ -1,0 +1,16 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Réponse à la réclamation n°{{ reclamation.id }}{% endblock %}
+
+{% block body %}
+    <h1>Réponse à la réclamation n°{{ reclamation.id }}</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Description :</th>
+                <td>{{ reponse.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

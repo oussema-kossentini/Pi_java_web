@@ -107,6 +107,14 @@ class ReclamationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function trie_croissant_date()
+    {
+        return $this->createQueryBuilder('reclamation')
+            ->orderBy('reclamation.date','ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     function  getproduits()
 
     {

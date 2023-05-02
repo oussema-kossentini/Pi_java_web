@@ -43,7 +43,8 @@
                                     Non traitee
                                 </h6>
                                 
-                                {% for reclamation in rec2 %}
+                                {% for reclamation in pagination %}
+                                {% for reclamation in rec1 %}
                                 {% if reclamation.state == "non traitee" %}
                                 <a class="dropdown-item d-flex align-items-center" href="{{ path('app_reponse_new', {'id': reclamation.id}) }}">
                                     <div class="mr-3">
@@ -63,6 +64,7 @@
                                 {% endif %}
                                 {% else %}
                                     <div class="small text-gray-500">no records found</div>
+                                {% endfor %}
                                 {% endfor %}
                             </div>
                         </li>
@@ -87,22 +89,21 @@
                 
         
 
-     {{ knp_pagination_render(pagination) }} 
-
+    {{knp_pagination_render(pagination) }} 
     <div>
-
-
-
-
-
     <a href="{{ path('app_reclamation_new') }}">Create new</a>
 
-    <a href="{{ path('app_rec_date') }}" class="btn btn-secondary ">Trier par date</a>
+    <a href="{{ path('app_rec_date') }}" class="btn btn-secondary ">Trier par date dsc </a>
+    <a href="{{ path('app_rec_dateasc') }}" class="btn btn-secondary ">Trier par date asc </a>
     <a href="{{ path('app_rec_type') }}" class="btn btn-secondary ">Trier par type</a>
+    <a href="{{ path('app_rec_typeasc') }}" class="btn btn-secondary ">Trier par type asc</a>
+    <a href="{{ path('app_rec_typelivraison') }}" class="btn btn-secondary ">Livraison</a>
+    <a href="{{ path('app_rec_typepaiement') }}" class="btn btn-secondary ">Paiement</a>
+    <a href="{{ path('app_rec_typeservice') }}" class="btn btn-secondary ">service</a>
+    <a href="{{ path('app_rec_typeall') }}" class="btn btn-secondary ">all</a>
     <a href="{{ path('app_reclamation_index277') }}" class="btn btn-secondary ">stat reclamation</a>
-
-    
     </div>
+    
     </div>
                         </div>
                         </div>

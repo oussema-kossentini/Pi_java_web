@@ -40,7 +40,7 @@ class ReponseController extends AbstractController
         $rec = $reclamationRepository-> find($id);
         $rec->setState("traitee");
         $reclamationRepository->save($rec, true);
-        $reponse->setReclam($rec);
+        $reponse->setReclamation($rec);
         $reponse->setDate(new DateTimeImmutable());
         $reponseRepository->save($reponse, true);
 
@@ -60,6 +60,14 @@ class ReponseController extends AbstractController
             'reponse' => $reponse,
         ]);
     }
+
+
+
+
+
+
+
+    
 
     #[Route('/{id}/edit', name: 'app_reponse_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reponse $reponse, ReponseRepository $reponseRepository): Response

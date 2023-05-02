@@ -56,16 +56,13 @@
     </div>
 
 </div>
+
+<div>
 <a href="{{ path('app_reclamation_new') }}" onclick="window.location.href=this.getAttribute('href')" class="btn btn-reclamation">Nouvelle Réclamation</a>
+
+<a href="{{ path('app_reclamation_reclamationclientemail', {'id': reclamation.id,'email': reclamation.email}) }}" onclick="window.location.href=this.getAttribute('href')" class="btn btn-reclamation">Voir mes réclamations</a>
+
+
+
 </div>
-
-
-
-
-
-</div>
-
-<a href="{{ path('app_reclamation_reclamationclientemail', {'email': reclamation.getEmail() }) }}" onclick="window.location.href=this.getAttribute('href')" class="btn btn-reclamation">mes Réclamation</a>
-
-
 {% endblock %}

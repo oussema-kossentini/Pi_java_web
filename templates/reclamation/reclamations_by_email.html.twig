@@ -1,0 +1,87 @@
+{% extends 'basefront.html.twig' %}
+
+{% block body %}
+
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .merci-container {
+            display: flex;
+            flex-direction: column; /* Affichage en colonne pour aligner le bouton */
+            justify-content: center;
+            align-items: center;
+            max-height: 400px;
+            max-width: 600px;
+            height: 80vh;
+            background-color: orange;
+            border-radius: 10px;
+        }
+
+        .merci-message {
+            font-size: 3rem;
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 2rem;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .btn-reclamation {
+            background-color: white; /* Couleur de fond */
+            color: orange; /* Couleur du texte */
+            border-color: orange; /* Couleur de la bordure */
+            border-radius: 10px; /* Arrondi de bordure */
+            padding: 10px 20px; /* Espacement du texte */
+            font-size: 1.5rem;
+            margin-top: 1rem; /* Espacement du bouton par rapport au message */
+        }
+
+        .btn-reclamation:hover {
+            background-color: orange;
+            color: white;
+            border-color: white;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}Réclamations pour {{ email }}{%endblock title %}
+
+    <h1>Réclamations pour {{ email }}</h1>
+
+
+
+    
+    {% if reclamations|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Type de réclamation</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>state</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reclamation in reclamations %}
+                    <tr>
+                        <td>{{ reclamation.type }}</td>
+                        <td>{{ reclamation.date|date('d/m/Y') }}</td>
+                        <td>{{ reclamation.description }}</td>
+                        <td>{{ reclamation.state }}</td>
+                        <td>
+                            {% if reclamation.state == 'traitee' %}
+                            <a href="{{ path('view_reclamation_response',{'id': reclamation.id}) }}" onclick="window.location.href=this.getAttribute('href')" class="btn btn-reclamation"> voir reponse</a>
+                           
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucune réclamation pour cet personne
+            {% endif %}
+{% endblock %}

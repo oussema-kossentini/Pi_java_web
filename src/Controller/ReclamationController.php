@@ -7,8 +7,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart;
+
 // use Symfony\Component\Mailer\MailerInterface;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
@@ -37,11 +36,12 @@ class ReclamationController extends AbstractController
 
 
 
-    public function __construct( PaginatorInterface $paginator)
+    public function __construct (PaginatorInterface $paginator)
 {
-    
+   
     $this->paginator = $paginator;
 }
+
 
 
     #[Route('/22', name: 'app_reclamation_index1', methods: ['GET'])]
@@ -52,6 +52,7 @@ class ReclamationController extends AbstractController
         ]);
 
     }   
+
     #[Route('/27', name: 'app_reclamation_index27', methods: ['GET'])]
     public function index27(ReclamationRepository $reclamationRepository): Response
     {
@@ -59,97 +60,29 @@ class ReclamationController extends AbstractController
             'reclamations' => $reclamationRepository->findAll(),
         ]);
 
+
     }   
-
-
-
-    // public function complaints(ReclamationRepository $reclamationRepository): JsonResponse
-    // {
-    //     $livraisonCount = $reclamationRepository->countByType('livraison');
-    //     $serviceCount = $reclamationRepository->countByType('service');
-    //     $paiementCount = $reclamationRepository->countByType('paiement');
-    //     $autreCount = $reclamationRepository->countByType('autre');
-    
-    //     $data = [
-    //         'livraison' => $livraisonCount,
-    //         'service' => $serviceCount,
-    //         'paiement' => $paiementCount,
-    //         'autre' => $autreCount,
-    //     ];
-    
-    //     return new JsonResponse($data);
-    // }
-
-
-//     #[Route('/counts', name: 'app_reclamation_counts', methods: ['GET'])]
-//     public function getComplaintCounts(ReclamationRepository $reclamationRepository): JsonResponse
-// {
-//     $counts = [];
-//     $reclamations = $reclamationRepository->findAll();
-//     foreach ($reclamations as $reclamation) {
-//         $type = $reclamation->getType();
-//         if (isset($counts[$type])) {
-//             $counts[$type]++;
-//         } else {
-//             $counts[$type] = 1;
-//         }
-//     }
-//     return $this->json($counts);
-// }
-
-
-
-    
-    #[Route('/statreclamation', name: 'app_reclamation_index277', methods: ['GET'])]
+    #[Route('/counts', name: 'app_reclamation_counts', methods: ['GET'])]
+    public function getComplaintCounts(ReclamationRepository $reclamationRepository): JsonResponse
+{
+    $counts = [];
+    $reclamations = $reclamationRepository->findAll();
+    foreach ($reclamations as $reclamation) {
+        $type = $reclamation->getType();
+        if (isset($counts[$type])) {
+            $counts[$type]++;
+        } else {
+            $counts[$type] = 1;
+        }
+    }
+    return $this->json($counts);
+}
+//version 
+#[Route('/statreclamation', name: 'app_reclamation_index277', methods: ['GET'])]
 public function index277(ReclamationRepository $reclamationRepository): Response
 {
 
-    // // $complaintCounts = $this->getComplaintCounts();
-
-
-
-
-
-    // $ob = new Highchart();
-
-    // $ob->chart->renderTo('piechart');
-
-    // $ob->title->text('stat type');
-
-    // $ob->plotOptions->pie(array(
-    //     'allowPointSelect' => true,
-    //     'cursor' => 'pointer',
-    //     'dataLabels' => array('enabled' => false),
-    //     'showInLegend' => true
-    // ));
-
-    // $data2 = [];
-    // $stattype = [];
-    // $categCount = [];
-
-    // $reclamations = $reclamationRepository->findAll();
-    // foreach ($reclamations as $reclamation) {
-    //     $stattype[] = $reclamation->getType();
-    //     $categCount[] = $reclamationRepository->getproduits($reclamation->getId());
-    // }
-
-    // $i = 0;
-    // foreach ($stattype as $p) {
-    //     if ($i < count($categCount[0])) {
-    //         array_push($data2,[$stattype[$i],$categCount[0][$i]['num']]);
-    //     } else {
-    //         // handle the error, e.g. by skipping this element
-    //     }
-    //     $i++;
-    // }
-
-    // $ob->series(array(
-    //     array(
-    //         'type' => 'pie',
-    //         'name' => 'typeR',
-    //         'data' => $data2
-    //     )
-    // ));
+    
     $query = $reclamationRepository->createQueryBuilder('r')
     ->select('r.type, COUNT(r.id) AS num')
     ->groupBy('r.type')
@@ -185,17 +118,13 @@ $ob->series([
         'chart' => $ob
     ]);
 }
-
-    
-
-
  
     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
-    public function index(Request $request ,ReclamationRepository $reclamationRepository): Response
+    public function index(Request $request ,ReclamationRepository $reclamationRepository,PaginatorInterface $paginator): Response
     {
         $queryBuilder = $reclamationRepository->createQueryBuilder('r');
 
-        $pagination = $this->paginator->paginate(
+        $pagination =$paginator->paginate(
             $queryBuilder,
             $request->query->getInt('page', 1),
             10 // nombre d'éléments par page
@@ -203,10 +132,17 @@ $ob->series([
 
         return $this->render('reclamation/index.html.twig', [
             'pagination' => $pagination,
-            'rec2' => $reclamationRepository->findAll(),
+            'rec1' => $reclamationRepository->findAll(),
         ]);
-    
+
+
+        // return $this->render('reclamation/index.html.twig', [
+        //     'rec1' => $reclamationRepository->findAll(),
+        // ]);
     }
+
+    
+
     
     #[Route('/searchreceajax', name: 'app_searchrec', methods: ['GET'])]
      public function searchajax(Request $request ,ReclamationRepository $repository)
@@ -221,27 +157,218 @@ $ob->series([
      }
 
       
-    #[Route('/date', name: 'app_rec_date', methods: ['GET'])]
-    function decroissantDate(ReclamationRepository $repository){
-        $rec = $repository->trie_decroissant_date();
+    // #[Route('/date', name: 'app_rec_date', methods: ['GET'])]
+    // function decroissantDate(ReclamationRepository $repository){
+    //     $rec = $repository->trie_decroissant_date();
         
-        return $this->render('reclamation/index.html.twig',['pagination' => $rec]);
-    }
 
-    #[Route('/type', name: 'app_rec_type', methods: ['GET'])]
-    function decroissantType(ReclamationRepository $repository){
-        $rec = $repository->trie_decroissant_type();
+
+
+
         
-        return $this->render('reclamation/index.html.twig',['pagination' => $rec]);
-    }
+    //     return $this->render('reclamation/index.html.twig',['pagination' => $rec]);
+    // }
+
+
+
+
+    #[Route('/date', name: 'app_rec_date', methods: ['GET'])]
+function decroissantDate(Request $request, ReclamationRepository $repository, PaginatorInterface $paginator)
+{
+    $queryBuilder = $repository->createQueryBuilder('r')
+        ->orderBy('r.date', 'DESC');
+
+    $pagination = $paginator->paginate(
+        $queryBuilder,
+        $request->query->getInt('page', 1),
+        10 // nombre d'éléments par page
+    );
+
+    return $this->render('reclamation/index.html.twig', [
+        'pagination' => $pagination,
+        'rec1' => $repository->findAll(),
+    ]);
+}
+#[Route('/datea', name: 'app_rec_dateasc', methods: ['GET'])]
+function croissantDate(Request $request, ReclamationRepository $repository, PaginatorInterface $paginator)
+{
+    $queryBuilder = $repository->createQueryBuilder('r')
+        ->orderBy('r.date', 'ASC');
+
+    $pagination = $paginator->paginate(
+        $queryBuilder,
+        $request->query->getInt('page', 1),
+        10 // nombre d'éléments par page
+    );
+
+    return $this->render('reclamation/index.html.twig', [
+        'pagination' => $pagination,
+        'rec1' => $repository->findAll(),
+    ]);
+}
+
+
+
+
+
+
+
+#[Route('/type', name: 'app_rec_type', methods: ['GET'])]
+function decroissantType(Request $request, ReclamationRepository $repository, PaginatorInterface $paginator)
+{
+    $queryBuilder = $repository->createQueryBuilder('r')
+        ->orderBy('r.type', 'DESC');
+
+    $pagination = $paginator->paginate(
+        $queryBuilder,
+        $request->query->getInt('page', 1),
+        10 // nombre d'éléments par page
+    );
+
+    return $this->render('reclamation/index.html.twig', [
+        'pagination' => $pagination,
+        'rec1' => $repository->findAll(),
+    ]);
+}
+
+#[Route('/typea', name: 'app_rec_typeasc', methods: ['GET'])]
+function croissantType(Request $request, ReclamationRepository $repository, PaginatorInterface $paginator)
+{
+    $queryBuilder = $repository->createQueryBuilder('r')
+        ->orderBy('r.type', 'asc');
+
+    $pagination = $paginator->paginate(
+        $queryBuilder,
+        $request->query->getInt('page', 1),
+        10 // nombre d'éléments par page
+    );
+
+    return $this->render('reclamation/index.html.twig', [
+        'pagination' => $pagination,
+        'rec1' => $repository->findAll(),
+    ]);
+}
+
+
+#[Route('/typelivraison', name: 'app_rec_typelivraison', methods: ['GET'])]
+function Typelivraison(Request $request, ReclamationRepository $repository, PaginatorInterface $paginator)
+{
+    $queryBuilder = $repository->createQueryBuilder('r')
+        ->where('r.type = :type')
+        ->setParameter('type', 'livraison');
+        
+
+    $pagination = $paginator->paginate(
+        $queryBuilder,
+        $request->query->getInt('page', 1),
+        10 // nombre d'éléments par page
+    );
+
+    return $this->render('reclamation/index.html.twig', [
+        'pagination' => $pagination,
+        'rec1' => $repository->findAll(),
+    ]);
+}
+
+#[Route('/typepaiement', name: 'app_rec_typepaiement', methods: ['GET'])]
+function Typepaiement(Request $request, ReclamationRepository $repository, PaginatorInterface $paginator)
+{
+    $queryBuilder = $repository->createQueryBuilder('r')
+        ->where('r.type = :type')
+        ->setParameter('type', 'paiement');
+        
+
+    $pagination = $paginator->paginate(
+        $queryBuilder,
+        $request->query->getInt('page', 1),
+        10 // nombre d'éléments par page
+    );
+
+    return $this->render('reclamation/index.html.twig', [
+        'pagination' => $pagination,
+        'rec1' => $repository->findAll(),
+    ]);
+}
+
+
+#[Route('/typeservice', name: 'app_rec_typeservice', methods: ['GET'])]
+function Typeservice(Request $request, ReclamationRepository $repository, PaginatorInterface $paginator)
+{
+    $queryBuilder = $repository->createQueryBuilder('r')
+        ->where('r.type = :type')
+        ->setParameter('type', 'service');
+        
+
+    $pagination = $paginator->paginate(
+        $queryBuilder,
+        $request->query->getInt('page', 1),
+        10 // nombre d'éléments par page
+    );
+
+    return $this->render('reclamation/index.html.twig', [
+        'pagination' => $pagination,
+        'rec1' => $repository->findAll(),
+    ]);
+}
+
+
+#[Route('/typeall', name: 'app_rec_typeall', methods: ['GET'])]
+function Typeall(Request $request, ReclamationRepository $reclamationRepository, PaginatorInterface $paginator)
+{
+    $queryBuilder = $reclamationRepository->createQueryBuilder('r');
+
+        $pagination =$paginator->paginate(
+            $queryBuilder,
+            $request->query->getInt('page', 1),
+            10 // nombre d'éléments par page
+        );
+
+        return $this->render('reclamation/index.html.twig', [
+            'pagination' => $pagination,
+            'rec1' => $reclamationRepository->findAll(),
+        ]);
+
+
+}
+
+// #[Route('/reclient{email}', name: 'app_reclamation_reclamationclientx', methods: ['GET'])]
+// function afficherreclamationclient(Request $request, ReclamationRepository $reclamationRepository, PaginatorInterface $paginator)
+// {
     
+
+
+//     $queryBuilder = $repository->createQueryBuilder('r')
+//         ->where('r.email = :getemail');
+        
+
+
+
+//         $pagination =$paginator->paginate(
+//             $queryBuilder,
+//             $request->query->getInt('page', 1),
+//             10 // nombre d'éléments par page
+//         );
+
+//         return $this->render('reclamation/index.html.twig', [
+//             'pagination' => $pagination,
+//             'rec1' => $reclamationRepository->findAll(),
+//         ]);
+
+
+// }
+
+
+
+
+
+
 
 
 
 
 
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReclamationRepository $reclamationRepository, FlashyNotifier $flashy, \Swift_Mailer $mailer): Response
+    public function new(Request $request, ReclamationRepository $reclamationRepository, FlashyNotifier $flashy, \Swift_Mailer $mailer,\Twig\Environment $twig): Response
     {        
         // , \Swift_Mailer $mailler
     $reclamation = new Reclamation();
@@ -283,14 +410,8 @@ $ob->series([
 
         $reclamationRepository->save($reclamation, true);
         $email = (new \Swift_Message('Reclmataion:' ))
-              
-        //        ->setFrom('oussema.kossentini@esprit.tn')
-        //         ->setTo($reclamation->getEmail())
-        //         ->setBody("Mr " . " , merci pour votre reclamation"
-
-        //         );
-        // $mailer->send($email);
-        ->setFrom('oussema.kossentini@esprit.tn')
+           
+               ->setFrom('oussema.kossentini@esprit.tn')
                 ->setTo($reclamation->getEmail())
                 
                // ->setBody("Mr " . " , merci pour votre reclamation "
@@ -306,10 +427,14 @@ $ob->series([
         $this->addFlash('success', 'This reclamation added successfully');
 
         
-     
+      
+        return $this->redirectToRoute('app_reclamation_indexmerci', [
+            'id' => $reclamation->getId(),
+            'email' => $reclamation->getEmail()
+        ], Response::HTTP_SEE_OTHER);
+    
 
-
-        return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
+        // return $this->redirectToRoute('app_reclamation_indexmerci', ['id' => $reclamation->getId(),'email' => $reclamation->getEmail()], Response::HTTP_SEE_OTHER);
     }
 
     return $this->renderForm('reclamation/new.html.twig', [
@@ -319,87 +444,144 @@ $ob->series([
     ]);
     }
 
+    // #[Route('/merci{id}', name: 'app_reclamation_indexmerci', methods: ['GET'])]
+    // public function showmerci(Reclamation $reclamation,String $email): Response
+    // {
+       
+    //      $email = $reclamation->getEmail();
+    //     return $this->render('reclamation/merci.html.twig', [
+    //         'reclamation' => $reclamation,
+    //          'email' => $email,
+    //     ]);
+       
+    //     return $this->redirectToRoute('app_reclamation_reclamationclientemail', ['email' => $email]);
+
+    // }
+//     #[Route('/merci{id}', name: 'app_reclamation_indexmerci', methods: ['GET'])]
+// public function showmerci(Reclamation $reclamation, String $email): Response
+// {
+//     return $this->render('reclamation/merci.html.twig', [
+//         'reclamation' => $reclamation,
+//         'email' => $email,
+//     ]);
+
+//     return $this->redirectToRoute('app_reclamation_reclamationclientemail', ['email' => $email]);
+// }
+
+#[Route('/merci/{id}/', name: 'app_reclamation_indexmerci', methods: ['GET'])]
+public function showmerci(Reclamation $reclamation,): Response
+{
+    return $this->render('reclamation/merci.html.twig', [
+        'reclamation' => $reclamation,
+        
+    ]);
+
+ 
+}
+
+#[Route('/reclamation/client/{id}', name: 'app_reclamation_reclamationclientemail', methods: ['GET'])]
+public function showReclamationsByEmail(int $id, ReclamationRepository $reclamationRepository): Response
+{
+
+
+
+    
+    $reclamation = $reclamationRepository->findOneBy(['id' => $id]);
+
+    if (!$reclamation) {
+        throw $this->createNotFoundException('Reclamation not found');
+    }
+
+    $email = $reclamation->getEmail();
+    $reclamations = $reclamationRepository->findBy(['email' => $email]);
+
+    return $this->render('reclamation/reclamations_by_email.html.twig', [
+        'reclamations' => $reclamations,
+        'email' => $email,
+    ]);
+}
+
+
+    // $reclamation = $this->getDoctrine()->getRepository(Reclamation::class)->find($id);
+
+    // // Check if the reclamation exists
+    // if (!$reclamation) {
+    //     throw $this->createNotFoundException('Reclamation not found for id '.$id);
+    // }
+
+    // // Get the response entity for the reclamation
+    // $reponse = $reclamation->getReponses()->filter(function ($reponse) {
+    //     return $reponse->getState() === 'traité';
+    // })->first();
+
+    // // Render the view with the reclamation and response entities
+    // return $this->render('reclamation/view_reclamation_response.html.twig', [
+    //     'reclamation' => $reclamation,
+    //     'reponse' => $reponse,
+    // ]);
+
+
+#[Route('/reclamation/reponse/{id}', name: 'view_reclamation_response', methods: ['GET'])]
+
+
+    public function viewReclamationResponse(Request $request, Reclamation $reclamation): Response
+{
+    $reponse = $reclamation->getReponse();
+
+    return $this->render('reclamation/reponse.html.twig', [
+        'reclamation' => $reclamation,
+        'reponse' => $reponse
+    ]);
+}
+
+
+
+
+
+
+
+    // #[Route('/reclamation/client/{id}', name: 'app_reclamation_reclamationclientemail', methods: ['GET'])]
+    // public function showReclamationsByEmail(string $email, ReclamationRepository $reclamationRepository): Response
+    // {
+    //     $reclamations = $reclamationRepository->find['r.email where r.id =id recu par le get]);
+    
+    //     return $this->render('reclamation/reclamations_by_email.html.twig', [
+    //         'reclamations' => $reclamations,
+    //         'email' => $email,
+    //     ]);
+    // }
+    
+
+    // #[Route('/reclient{email}', name: 'app_reclamation_reclamationclientemail', methods: ['GET'])]
+    // function afficherreclamationClientx(Request $request, ReclamationRepository $reclamationRepository, PaginatorInterface $paginator,String $email)
+    // {
+       
+
+    //     $queryBuilder = $reclamationRepository->createQueryBuilder('r')
+    //         ->where('r.email = :email')
+    //         ->setParameter('email', $email);
+    
+    //     $pagination = $paginator->paginate(
+    //         $queryBuilder,
+    //         $request->query->getInt('page', 1),
+    //         10 // nombre d'éléments par page
+    //     );
+    
+    //     return $this->render('reclamation/index.html.twig', [
+    //         'pagination' => $pagination,
+    //         'rec1' => $reclamationRepository->findAll(),
+    //     ]);
+    // }
+    
+
+
     #[Route('/{id}', name: 'app_reclamation_show', methods: ['GET'])]
     public function show(Reclamation $reclamation): Response
     {
-        // $ob = new Highchart();
-
-        // $ob->chart->renderTo('piechart');
-
-        // $ob->title->text('stat type');
-
-        // $ob->plotOptions->pie(array(
-
-        //     'allowPointSelect' => true,
-
-        //     'cursor' => 'pointer',
-
-        //     'dataLabels' => array('enabled' => false),
-
-        //     'showInLegend' => true
-
-        // ));
-
-
-
-
-        // $reclamation= $repository->findAll();
-
-
-
-
-        // $data2=[];
-
-        // $stattype=[];
-
-        // $categCount=[];
-
-        // $somme=0;
-
-        // $compt[]=0;
-
-
-
-
-        // foreach($reclamation as $reclamation){
-
-        //     $stattype[] = $reclamation->getType();
-
-        //     $categCount[] = $repository->getproduits();
-
-
-
-
-
-
-
-        // }
-
-        // $i=0;
-
-        // foreach($stattype as $p)
-
-        // {
-
-        //     array_push($data2,[$stattype[$i],$categCount[0][$i]['num']]);
-
-        //     $i++;
-
-        // }
-
-        // $ob->series(array(array('type' => 'pie','name' => 'typeR', 'data' => $data2)));
-
-
         return $this->render('reclamation/show.html.twig', [
-            'reclamation' => $reclamation, 
+            'reclamation' => $reclamation,
         ]);
-
-
-
-
     }
-
-
 
     #[Route('/{id}/edit', name: 'app_reclamation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
@@ -430,11 +612,11 @@ $ob->series([
     }
 
     #[Route('/{id}', name: 'app_reclamation_delete', methods: ['POST'])]
-    public function delete(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
+    public function delete(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository, FlashyNotifier $flashy,): Response
     {
         if ($this->isCsrfTokenValid('delete'.$reclamation->getId(), $request->request->get('_token'))) {
             $reclamationRepository->remove($reclamation, true);
-            // $this->addFlash('danger', 'This reclamation deleted successfully');
+            $this->addFlash('danger', 'This reclamation deleted successfully');
         }
 
         return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
