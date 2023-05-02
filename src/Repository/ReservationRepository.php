@@ -5,6 +5,23 @@ namespace App\Repository;
 use App\Entity\Reservation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityManagerInterface;
+
+use App\Form\ReservationType;
+use App\Repository\ReservationRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Bundle\SnappyBundle\KnpSnappyBundle;
+use Dompdf\Dompdf;
+use App\Service\PDFgenerator;
+use Knp\Component\Pager\Pagination\SlidingPaginationInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 /**
  * @extends ServiceEntityRepository<Reservation>
@@ -37,6 +54,24 @@ class ReservationRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+    public function sortByNom()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    
+    function searchQB($searchTerm)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.nom LIKE :searchTerm')
+            ->orWhere('r.prenom LIKE :searchTerm')
+            ->orWhere('r.ville LIKE :searchTerm')
+            ->setParameter('searchTerm', '%'.$searchTerm.'%')
+            ->getQuery()
+            ->getResult();
     }
     
 //    /**

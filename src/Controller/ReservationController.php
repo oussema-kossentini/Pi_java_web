@@ -15,24 +15,37 @@ use Dompdf\Dompdf;
 use App\Service\PDFgenerator;
 use Knp\Component\Pager\Pagination\SlidingPaginationInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/reservation')]
 class ReservationController extends AbstractController
 {
     #[Route('/', name: 'app_reservation_index', methods: ['GET'])]
-public function index(Request $request, ReservationRepository $reservationRepository, PaginatorInterface $paginator): Response
+// src/Controller/ReservationController.php
+
+public function index(EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator): Response
 {
-    $reservation = $paginator->paginate(
-        $reservationRepository->findAll(),
+    $queryBuilder = $entityManager->createQueryBuilder()
+        ->select('r')
+        ->from(Reservation::class, 'r')
+        ->orderBy('r.nom', 'ASC');
+
+    $pagination = $paginator->paginate(
+        $queryBuilder,
         $request->query->getInt('page', 1),
-        2
+        
     );
 
     return $this->render('reservation/index.html.twig', [
-        'reservation' => $reservation,
+        'reservations' => $pagination,
     ]);
 }
+
+
+
+
 
 
     #[Route('/generate-pdf', name: 'app_reservation_generate_pdf', methods: ['GET'])]
@@ -81,6 +94,14 @@ public function generatePdf(ReservationRepository $reservationRepository): Respo
     return $response;
 }
 
+#[Route('/recherchereservation', name: 'app_reservation_recherche')]
+public function rechercheRes(ReservationRepository $reservationRepository, Request  $request): Response
+{
+    $data=$request->get('search');
+    $reservation = $reservationRepository->searchQB($data);
+    return $this->render('reservation/index.html.twig',
+        ["reservations" => $reservation]);
+}
    
     
     
@@ -102,7 +123,7 @@ public function generatePdf(ReservationRepository $reservationRepository): Respo
             'form' => $form,
         ]);
     }
-
+    
     #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]
     public function show(Reservation $reservation, FlashyNotifier $flashy): Response
     {   
@@ -153,5 +174,33 @@ public function delete(Request $request, Reservation $reservation, ReservationRe
 
     return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
 }
-   
+#[Route('/map', name: 'app_reservation_map')]
+    public function showMap(): Response
+    {
+        return $this->render('reservation/map.html.twig', [
+            
+        ]);
+    }
+    #[Route('/show_in_map/{id}', name: 'app_reservation_map', methods: ['GET'])]
+    public function Map( Reservation $id,EntityManagerInterface $entityManager ): Response
+    {
+
+        $reservation = $entityManager
+            ->getRepository(Reservation::class)->findBy( 
+                ['id'=>$id]
+            );
+        return $this->render('map/api_arcgis.html.twig', [
+            'reservation' => $reservation,
+        ]);
+    }
 }
+
+
+
+
+
+
+
+
+
+    

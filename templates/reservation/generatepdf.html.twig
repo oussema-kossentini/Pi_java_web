@@ -1,12 +1,72 @@
-{% extends 'base.html.twig' %}
+<html>
+<head>
+    <title>Mon PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            color: #333;
+        }
+        h1 {
+            font-size: 20px;
+            color: #0066cc;
+        }
+        table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+}
 
-{% block title %}Reservation{% endblock %}
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
 
-{% block body %}
+th {
+  background-color: #f2f2f2;
+}
 
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+td {
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+td:last-child {
+  border-right: none;
+}
+
+th:first-child,
+td:first-child {
+  border-left: none;
+}
+
+th:last-child,
+td:last-child {
+  border-right: none;
+}
+        
+    </style>
+</head>
+<body>
+ 
+    <h1>Le PDF de vos réservations :</h1>
+<p>Voici la liste de toutes vos réservations effectuées jusqu'à présent.</p>
+
+   
+    
     <h1>Reservation :</h1>
 
-    <table class="table">
+    <table>
         <thead>
             <tr>
                 <th>ID</th>
@@ -40,11 +100,12 @@
                 <td>{{ reservation.poids }}</td>
             </tr>
             {% else %}
-            
+            <tr>
+                <td colspan="12">Aucune reservation trouvée.</td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>
 
 </body>
 </html>
-{% endblock %}

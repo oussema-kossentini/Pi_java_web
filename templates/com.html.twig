@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Drone Photography</title>
+    <title>Dronify</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
@@ -52,6 +52,7 @@
                                     <a href="index.html"><img src="{{asset('FRONT/assets/img/logo/Dronify1 V white.png')}}" alt=""></a>
                                 </div>
                             </div>
+                            
                             <div class="col-xl-10 col-lg-10">
                                 <div class="menu-wrapper  d-flex align-items-center justify-content-end">
                                     <!-- Main-menu -->
@@ -59,9 +60,9 @@
                                         <nav>
                                             <ul id="navigation">
                                                 <li><a href="index.html">Home</a></li>
-                                                <li><a href="about.html">About</a></li>
-                                                <li><a href="services.html">Services</a></li>
                                                 <li><a href="{{ path('app_reservation_new' )}}">Reservation</a></li>
+                                                <li><a href="services.html">Services</a></li>
+                                                <li><a href="projects.html">Projects</a></li>
                                                 <li><a href="#">Blog</a>
                                                     <ul class="submenu">
                                                         <li><a href="blog.html">Blog</a></li>
@@ -93,7 +94,6 @@
         <!-- Header End -->
     </header>
     <main>
-
         <!--? Hero Start -->
         <div class="slider-area2 ">
             <div class="slider-height2 hero-overly d-flex align-items-center">
@@ -108,57 +108,9 @@
                 </div>
             </div>
         </div>
-        <!-- Hero End -->
-        <!--? Visit Our Tailor Start -->
         
-        <!-- Visit Our Tailor End -->
-        <!--? services area start -->
-        <section class="services-section services-section2 pb-padding  fix">
-            <div class="container">
-                <div class="custom-row">
-                    <div class="services-active">
-                        <div class="col-lg-4">
-                            <div class="single-cat">
-                                <div class="cat-icon">
-                                    <img src="{{asset('FRONT/assets/img/gallery/service4.webp')}}" alt="">
-                                </div>
-                                <div class="cat-cap">
-                                    <h5><a href="services.html">Drone Alpha pour le grand poid qui est superieur à 100kg </a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="single-cat">
-                                <div class="cat-icon">
-                                    <img src="{{asset('FRONT/assets/img/gallery/service5.jpg')}}" alt="">
-                                </div>
-                                <div class="cat-cap">
-                                    <h5><a href="services.html">Drone Bravo pour le poid medium qui est entre 50kg et 100kg </a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="single-cat">
-                                <div class="cat-icon">
-                                    <img src="{{asset('FRONT/assets/img/gallery/service6.webp')}}" alt="">
-                                </div>
-                                <div class="cat-cap">
-                                    <h5><a href="services.html">Drone Delta pour le poid leger inferieur à 50kg</a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="single-cat">
-                                <div class="cat-icon">
-                                    <img src="{{asset('FRONT/assets/img/gallery/services5s.png')}}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Services End -->
+        
+        <!--? Testimonial Area End -->
         <div class="contact-form">
             <div class="container">
                 <div class="row">
@@ -167,20 +119,21 @@
                             <div class="row ">
                                 <div class="col-xl-12 col-lg-11 col-md-8 col-lg-7 col-sm-9">
                                     <div class="section-tittle mb-30">
+                                    
                                         <h2>Remplir le formulaire</h2>
-                                         {%block body%}
-                                         {%endblock%}
                                         
                                     </div>
                                 </div>
+                                
                             </div>
+
+                            {%block body%}
+                            {%endblock%} 
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="contact-img">
-                
-            </div>
+            
         </div>
         
     </main>
@@ -215,7 +168,7 @@
                                     <h4>Navigation</h4>
                                     <ul>
                                         <li><a href="#">Home</a></li>
-                                        <li><a href="#">About</a></li>
+                                        <li><a href="{{ path('app_reservation_new' )}}">Reservation</a></li>
                                         <li><a href="#">Services</a></li>
                                         <li><a href="#">Blog</a></li>
                                         <li><a href="#">Contact</a></li>
@@ -256,24 +209,25 @@
                         <div class="row">
                             <div class="col-xl-12 ">
                                 <div class="footer-copy-right text-center">
-                                 <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                      Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                      <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                                  </div>
                               </div>
                           </div>
                       </div>
                   </div>
               </div>
+              <!-- Footer End-->
           </div>
-          <!-- Footer End-->
-      </div>
-  </footer>
-  <!-- Scroll Up -->
-  <div id="back-top" >
-    <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
-</div>
-
-<!-- JS here -->
+          
+      </footer>
+      <!-- Scroll Up -->
+      <div id="back-top" >
+        <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+    </div>
+    
+    <!-- JS here -->
 
     <script src="{{asset('FRONT/./assets/js/vendor/modernizr-3.5.0.min.js')}}"></script>
     <!-- Jquery, Popper, Bootstrap -->
@@ -315,6 +269,6 @@
     <!-- Jquery Plugins, main Jquery -->	
     <script src="{{asset('FRONT/./assets/js/plugins.js')}}"></script>
     <script src="{{asset('FRONT/./assets/js/main.js')}}"></script>
-
+    
 </body>
 </html>

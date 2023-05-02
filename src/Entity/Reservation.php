@@ -16,46 +16,57 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Assert\Type(type: "integer", message: "The value {{ value }} is not a valid {{ type }}.")]
+    #[Assert\NotBlank(message: "CIN should not be blank.")]
+    #[Assert\Type(type: "integer", message: "CIN should be a valid {{ type }}. {{ value }} given.")]
     private ?int $cin = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "The value {{ value }} is not a valid {{ type }}.")]
+    #[Assert\NotBlank(message: "Nom should not be blank.")]
+    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "Nom should be a valid {{ type }}. {{ value }} given.")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "The value {{ value }} is not a valid {{ type }}.")]
+    #[Assert\NotBlank(message: "Prenom should not be blank.")]
+    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "Prenom should be a valid {{ type }}. {{ value }} given.")]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "The value {{ value }} is not a valid {{ type }}.")]
+    #[Assert\NotBlank(message: "Ville should not be blank.")]
+    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "Ville should be a valid {{ type }}. {{ value }} given.")]
     private ?string $ville = null;
 
     #[ORM\Column]
-    #[Assert\Type(type: "integer", message: "The value {{ value }} is not a valid {{ type }}.")]
+    #[Assert\NotBlank(message: "Num_tel should not be blank.")]
+    #[Assert\Type(type: "integer", message: "Num_tel should be a valid {{ type }}. {{ value }} given.")]
     private ?int $num_tel = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Adresse_m should not be blank.")]
     private ?string $adresse_m = null;
 
     #[ORM\Column]
-    #[Assert\Type(type: "\DateTimeImmutable", message: "The value {{ value }} is not a valid {{ type }}.")]
+    #[Assert\NotBlank(message: "Date_livraison should not be blank.")]
+    #[Assert\Type(type: "\DateTimeImmutable", message: "Date_livraison should be a valid {{ type }}. {{ value }} given.")]
     private ?\DateTimeImmutable $date_livraison = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "The value {{ value }} is not a valid {{ type }}.")]
+    #[Assert\NotBlank(message: "Type_produit should not be blank.")]
+    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "Type_produit should be a valid {{ type }}. {{ value }} given.")]
     private ?string $type_produit = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "The value {{ value }} is not a valid {{ type }}.")]
+    #[Assert\NotBlank(message: "Lieu_depart should not be blank.")]
+    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "Lieu_depart should be a valid {{ type }}. {{ value }} given.")]
     private ?string $lieu_depart = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "The value {{ value }} is not a valid {{ type }}.")]
+    #[Assert\NotBlank(message: "Lieu_arrivee should not be blank.")]
+    #[Assert\Regex(pattern: '/^[a-zA-Z ]+$/', message: "Lieu_arrivee should be a valid {{ type }}. {{ value }} given.")]
     private ?string $lieu_arrivee = null;
 
     #[ORM\Column]
-    #[Assert\Type(type: "integer", message: "The value {{ value }} is not a valid {{ type }}.")]
+    #[Assert\NotBlank(message: "Poids should not be blank.")]
+    #[Assert\Type(type: "integer", message: "Poids should be a valid {{ type }}. {{ value }} given.")]
     private ?int $poids = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
