@@ -18,7 +18,7 @@ class PaiementType extends AbstractType
         $builder
             ->add('adresseM')
             ->add('date')
-            ->add('cvc')
+            ->add('CVC')
         ;
     }
 

@@ -111,6 +111,9 @@ class Facture
      * message="Le champs est vide")
      */
     private $status;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'iduser')]
+    private ?User $User = null;
 
     public function getId(): ?int
     {

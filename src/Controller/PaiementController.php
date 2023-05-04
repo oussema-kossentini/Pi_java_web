@@ -88,21 +88,6 @@ class PaiementController extends AbstractController
 
         return $this->redirectToRoute('app_paiement_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    #[Route('/rechajax', name:'rechajax')]
-     
-    public function rechajax(Request $request ,PaiementRepository $repository)
-    {
-        $repository = $this->getDoctrine()->getRepository(Paiement::class);
-        $requestString=$request->get('searchValue');
-        $paiement = $repository->findByMail($requestString);
-        
-        
-        return $this->render('paiement/ajax.html.twig', [
-            "paiement"=>$paiement,
-        ]);
-    
-    }
     
     #[Route('/paiement/sendsms', name: 'Password_send_sms')]
     // Send SMS notification to admin
@@ -115,13 +100,13 @@ class PaiementController extends AbstractController
         if ($form->isSubmitted()) {
             $data = $form->getData();
             $num = $data['number'];
-            $accountSid = 'AC362541b659d46d90a50852c6d55c2b63';
-            $authToken = '445fcd3c886600332b3a0f40155c109f';
+            $accountSid = 'AC7a8360da7ec31794623bf07ba4b2c005';
+            $authToken = '4ff5a9c314ecdfc1503f4182dae05ba1';
             $client = new Client($accountSid, $authToken);
             $message = $client->messages->create(
                 $num, // replace with admin's phone number
                 [
-                    'from' => '+15746266435', // replace with your Twilio phone number
+                    'from' => '+15672922329', // replace with your Twilio phone number
                     'body' => 'Bonjour cher client, votre paiement est en cours de traitement. Merci pour votre confiance !', // replace with your message
                 ]
             );

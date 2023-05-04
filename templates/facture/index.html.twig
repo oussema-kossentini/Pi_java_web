@@ -51,36 +51,55 @@
       margin-bottom: 10px;
     }
   </style>
-    <a href="{{ path('app_facture_new') }}" class="btn btn-primary">Create new</a>
-    <button type="submit" class="btn btn-primary ">Trier par prix</button>
+  <div>
+    <a href="{{ path('app_facture_new') }}" class="btn btn-secondary ">Create new</a>
+    <a href="{{ path('app_facture_sort') }}" class="btn btn-secondary" id="sort-button">Trier par prix</a>
+    <a href="{{ path('calculer_total') }}" class="btn btn-secondary">Calculer</a>
+    <input type="text" class="form-contr
+                ol" id="total" name="total"placeholder="Total en dinars..." value="{{ total ?? '' }}" readonly>
+</div>
     <script>
         $(document).ready(function() {
-            $('#sort-button').on('click', function() {
-                $.ajax({
-                    url: '{{ path('app_facture_sort') }}',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(response) {
-                        $('#facture-container').html(response.html);
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                    }
-                });
-            });
-        });
+  $('#sort-button').on('click', function(e) {
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('href'),
+      type: 'GET',
+      dataType: 'json',
+      success: function(response) {
+        $('#facture-container').html(response.html);
+      },
+      error: function(xhr, status, error) {
+        console.log(error);
+      }
+    });
+  });
+});
     </script>
-    <div class="d-flex justify-content-between ">
-    <form action="{{ path('calculer_total') }}" method="post">
-        <button type="submit" class="btn btn-primary">Calculer le total des revenus</button>
-        <div class="form-group">
-            <label for="total">Total:</label>
-                <input type="text" class="form-contr
-                ol" id="total" name="total" value="{{ total ?? '' }}" readonly>
 
+   <div class="d-flex justify-content-between ">
+    <form action="{{ path('calculer_total') }}" method="post">
+        <div class="form-group">          
         </div>
     </form>
     </div>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+
+                            type="text/javascript"></script>
+
+                    <script src="//code.highcharts.com/4.0.1/highcharts.js"></script>
+
+                    <script src="//code.highcharts.com/4.0.1/modules/exporting.js"></script>
+
+                    <script type="text/javascript">
+
+                        {{ chart(chart) }}
+
+                    </script>
+
+                    <div id="piechart" style="min-width: 200px; height: 400px; margin: 0 auto"></div>{# empty
+
+Twig template #}
 </div>
- <a href="{{ path('generator_service') }}" class="btn btn-primary px-3 py-1">Export PDF</a>
 {% endblock %}

@@ -1,58 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Paiement index{% endblock %}
+{% block title %}paiement index{% endblock %}
 
 {% block body %}
 
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2" id="search">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+    <h1>paiement</h1>
+    
+<div id="paiement-container">
+    <table class="table"id='myTable'>
+        <thead>
 
-                    
-
-
-<div id="all">
-		{% include "paiement/ajax.html.twig" %}
-	</div>
-	<div  id="search"></div>
-
-	
-
-
-
-{% block javascript %}
-    <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')}}"></script>
-    <script>
-        $(document).ready(function () {
-var currentRequest = null;
-$("#search").keyup(function (e) { 
-var value = $(this).val();
-if (currentRequest != null) {
-currentRequest.abort();
-}
-
-currentRequest = $.ajax({
-url: "{{ path('rechajax') }}",
-type: 'GET',
-data: {
-'searchValue': value
-},
-success: function (retour) {
-$('#all').html(retour);
-}
-});
-return false;
-});
-});
-    </script>
-{% endblock %}
-{% endblock %}
+            <tr>
+                <th>Id</th>
+                <th>Adresse Mail </th>
+                <th>Date</th>
+                <th>CVC</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        <input type="search" id="myInput" class="form-control pl-6" placeholder="Search "/><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script><script>$(document).ready(function () {$("#myInput").on("keyup", function () {var value = $(this).val().toLowerCase();$("#myTable tr ").filter(function () {$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)});})});</script>
+        {% for paiement in paiements %}
+            <tr>
+                <td>{{ paiement.id }}</td>
+                <td>{{ paiement.adresseM }}</td>
+                <td>{{ paiement.date ? paiement.date|date('Y-m-d') : '' }}</td>
+                <td>{{ paiement.CVC }}</td>
+                <td>
+                    <a href="{{ path('app_paiement_show', {'id': paiement.id}) }}" class="btn btn-outline-primary">show</a>
+                    <a href="{{ path('app_paiement_edit', {'id': paiement.id}) }}" class="btn btn-outline-primary">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

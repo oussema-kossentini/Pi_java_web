@@ -53,6 +53,21 @@
     "mercuryseries/flashy-bundle": {
         "version": "v5.1.0"
     },
+    "nyholm/psr7": {
+        "version": "1.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
+        },
+        "files": [
+            "./config/packages/nyholm_psr7.yaml"
+        ]
+    },
+    "ob/highcharts-bundle": {
+        "version": "1.7"
+    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {

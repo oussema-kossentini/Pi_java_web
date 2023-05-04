@@ -19,6 +19,12 @@ use Symfony\Component\Notifier\NotifierInterface;
 use Twig\Environment;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use App\Entity\PdfGeneratorService;
+use Ob\HighchartsBundle\Highcharts\Highchart;
+use App\Repository\FactureRepository;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
+
+
 
 #[Route('/facture')]
 class FactureController extends AbstractController
@@ -27,17 +33,91 @@ class FactureController extends AbstractController
     
     
     #[Route('/', name: 'app_facture_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager,FactureRepository $repository): Response
     {
         $factures = $entityManager
             ->getRepository(Facture::class)
             ->findAll();
 
+       
+            $factures = $repository->findAll();
+        $ob = new Highchart();
+
+        $ob->chart->renderTo('piechart');
+
+        $ob->title->text('stat facture');
+
+        $ob->plotOptions->pie(array(
+
+            'allowPointSelect' => true,
+
+            'cursor' => 'pointer',
+
+            'dataLabels' => array('enabled' => true),
+
+            'showInLegend' => true
+            
+
+        ));
+
+
+
+
+       
+        $factures= $repository->findAll();
+
+
+
+        $data2=[];
+
+        $categVille=[];
+
+        $categCount=[];
+
+        $somme=0;
+
+        $compt[]=0;
+
+
+
+
+        foreach($factures as $facture){
+
+            $categVille[] = $facture->getVille();
+            $categCount[] = $repository->getproduits();
+
+            
+
+        }
+
+        $i=0;
+
+        foreach($categVille as $p)
+
+        {
+
+            if (isset($categCount[0][$i]['num'])) {
+                array_push($data2, [$categVille[$i], $categCount[0][$i]['num']]);
+            } else {
+                // handle the case where the array key does not exist
+            }
+            $i++;
+
+        }
+
+        $ob->series(array(array('type' => 'pie','name' => 'Nombre des factures', 'data' => $data2)));
+
+
+
+
         return $this->render('facture/index.html.twig', [
             'factures' => $factures,
+             'chart' => $ob,
+
         ]);
-        
+    
     }
+
 
     #[Route('/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,FlashyNotifier $flashy): Response
@@ -97,7 +177,7 @@ class FactureController extends AbstractController
         return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
     }
 #[Route('/facture/sort/prix', name: 'app_facture_sort')]
-    public function trierParPrix(Request $request): JsonResponse
+    public function trierParPrix(Request $request,FactureRepository $repository): JsonResponse
     {
         $queryBuilder = $this->getDoctrine()->getRepository(Facture::class)->createQueryBuilder('p');
         $queryBuilder->orderBy('p.prix', 'ASC');
@@ -105,10 +185,77 @@ class FactureController extends AbstractController
         $Facture = $queryBuilder->getQuery()->getResult();
 
         $factureHtml = $this->renderView('facture/tri.html.twig', ['trie' => $Facture]);
+        $factures = $repository->findAll();
+        $ob = new Highchart();
+
+        $ob->chart->renderTo('piechart');
+
+        $ob->title->text('stat facture');
+
+        $ob->plotOptions->pie(array(
+
+            'allowPointSelect' => true,
+
+            'cursor' => 'pointer',
+
+            'dataLabels' => array('enabled' => true),
+
+            'showInLegend' => true
+            
+
+        ));
+
+
+
+
+       
+        $factures= $repository->findAll();
+
+
+
+        $data2=[];
+
+        $categVille=[];
+
+        $categCount=[];
+
+        $somme=0;
+
+        $compt[]=0;
+
+
+
+
+        foreach($factures as $facture){
+
+            $categVille[] = $facture->getVille();
+            $categCount[] = $repository->getproduits();
+
+            
+
+        }
+
+        $i=0;
+
+        foreach($categVille as $p)
+
+        {
+
+            if (isset($categCount[0][$i]['num'])) {
+                array_push($data2, [$categVille[$i], $categCount[0][$i]['num']]);
+            } else {
+                // handle the case where the array key does not exist
+            }
+            $i++;
+
+        }
+
+        $ob->series(array(array('type' => 'pie','name' => 'Nombre des factures', 'data' => $data2)));
 
         return new JsonResponse(['html' => $factureHtml]);
+        
     }
-    public function calculerTotal(Request $request, EntityManagerInterface $entityManager): Response
+    public function calculerTotal(Request $request, EntityManagerInterface $entityManager,FactureRepository $repository): Response
 {
     $factures = $entityManager->getRepository(Facture::class)->findAll();
     
@@ -116,27 +263,77 @@ class FactureController extends AbstractController
     foreach ($factures as $facture) {
         $total += $facture->getPrix();
     }
+    $factures = $repository->findAll();
+        $ob = new Highchart();
+
+        $ob->chart->renderTo('piechart');
+
+        $ob->title->text('stat facture');
+
+        $ob->plotOptions->pie(array(
+
+            'allowPointSelect' => true,
+
+            'cursor' => 'pointer',
+
+            'dataLabels' => array('enabled' => true),
+
+            'showInLegend' => true
+            
+
+        ));
+
+
+
+
+       
+        $factures= $repository->findAll();
+
+
+
+        $data2=[];
+
+        $categVille=[];
+
+        $categCount=[];
+
+        $somme=0;
+
+        $compt[]=0;
+
+
+
+
+        foreach($factures as $facture){
+
+            $categVille[] = $facture->getVille();
+            $categCount[] = $repository->getproduits();
+
+            
+
+        }
+
+        $i=0;
+
+        foreach($categVille as $p)
+
+        {
+
+            if (isset($categCount[0][$i]['num'])) {
+                array_push($data2, [$categVille[$i], $categCount[0][$i]['num']]);
+            } else {
+                // handle the case where the array key does not exist
+            }
+            $i++;
+
+        }
+
+        $ob->series(array(array('type' => 'pie','name' => 'Nombre des factures', 'data' => $data2)));
     
     return $this->render('facture/index.html.twig', [
         'factures' => $factures,
         'total' => $total, // add the total variable here
+        'chart' => $ob,
     ]);
 }  
-#[Route('/pdf', name: 'generator_service')]
-    public function pdfEvenement(EntityManagerInterface $entityManager): Response
-    { 
-        $factures = $entityManager->getRepository(Facture::class)->findAll();
-        $html =$this->renderView('facture/index.html.twig', ['factures' => $factures]);
-        $pdfGeneratorService=new PdfGeneratorService();
-        $pdf = $pdfGeneratorService->generatePdf($html);
-
-        return new Response($pdf, 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="document.pdf"',
-        ]);
-       
-    }}
-
-
-    
-
+}
