@@ -1,0 +1,79 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22 févr. 2023, 19:34:34
+    Author     : ousse
+*/
+.root{
+-fx-background-image:url('dro.jpg');
+-fx-background-size:cover; 
+}
+.white-form{
+    -fx-background-color: #fff;
+    -fx-background-radius: 8px;
+}
+
+.border{
+    -fx-border-color: linear-gradient(to bottom right,#1fa0a0, #1f20a0);
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+}
+
+.btn{
+    -fx-background-color: linear-gradient(to bottom right,#1fa0a0, #316666);
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.btn:hover{
+    -fx-background-color: linear-gradient(to bottom right,#15cdcd, #043c3c);
+}
+
+
+
+.button {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+
+
+.button:hover {
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+
+
+
+.table-view{
+    -fx-padding : 0px;
+    -fx-background-color:transparent;
+    -fx-border-color: linear-gradient(to bottom right,#1fa0a0, #316666);
+    -fx-border-radius: 8px;
+    -fx-border-width: 6px;
+}
+
+.table-view .column-header{
+    -fx-alignment: CENTER;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(to bottom right,#1fa0a0, #316666);
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-background-inset: 0 0 0 0;
+}
+
+.table-view .column-header, .filter{
+    -fx-background-color: transparent;
+    -fx-size: 50px;
+}
+
+
+
+

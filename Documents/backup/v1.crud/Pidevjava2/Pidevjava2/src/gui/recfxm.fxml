@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1032.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.RecfxmController">
+   <children>
+      <Button layoutX="140.0" layoutY="469.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="31.0" prefWidth="116.0" text="supprimer" />
+      <Button layoutX="256.0" layoutY="469.0" mnemonicParsing="false" onAction="#ADD" prefHeight="31.0" prefWidth="107.0" text="ajouter" />
+      <Label layoutX="10.0" layoutY="31.0" prefHeight="21.0" prefWidth="107.0" stylesheets="@style.css" text="type" />
+      <Label layoutX="23.0" layoutY="152.0" prefHeight="21.0" prefWidth="81.0" text="date" />
+      <TextField fx:id="type" layoutX="4.0" layoutY="61.0" prefHeight="31.0" prefWidth="140.0" stylesheets="@style.css" />
+      <Label layoutX="21.0" layoutY="313.0" prefHeight="21.0" prefWidth="81.0" stylesheets="@style.css" text="description" />
+      <TextField fx:id="description" layoutX="8.0" layoutY="343.0" prefHeight="117.0" prefWidth="218.0" stylesheets="@style.css" />
+      <TableView fx:id="TABrec" layoutX="517.0" layoutY="10.0" onDragEntered="#tezl" onMouseClicked="#tbt" onMouseDragEntered="#tenzel" prefHeight="573.0" prefWidth="479.0" stylesheets="@style.css">
+        <columns>
+          <TableColumn fx:id="TABtype" prefWidth="75.0" text="TYPE" />
+          <TableColumn fx:id="TABdate" prefWidth="140.0" text="DATE" />
+            <TableColumn fx:id="TABdescription" prefWidth="70.0" text="DESCRIPTION" />
+            <TableColumn fx:id="id" prefWidth="75.0" text="ID" />
+        </columns>
+      </TableView>
+      <DatePicker fx:id="date1" layoutX="-2.0" layoutY="185.0" stylesheets="@style.css" />
+      <TextField fx:id="deletefield" layoutY="275.0" prefHeight="31.0" prefWidth="123.0" stylesheets="@style.css" />
+      <TextField fx:id="date2" layoutX="1.0" layoutY="109.0" prefHeight="31.0" prefWidth="149.0" stylesheets="@style.css" />
+      <Button fx:id="update" layoutX="12.0" layoutY="469.0" mnemonicParsing="false" onAction="#update" text="update" />
+      <Button layoutX="8.0" layoutY="500.0" mnemonicParsing="false" onAction="#modifier" text="modifier" textFill="#0d0d0d" />
+      <Button layoutX="78.0" layoutY="469.0" mnemonicParsing="false" onAction="#readd" text="readd" />
+      <Label layoutX="25.0" layoutY="241.0" prefHeight="21.0" prefWidth="81.0" text="id" />
+      <Text fill="WHITE" layoutX="191.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RECLAMATION" wrappingWidth="343.6708984375" />
+   </children>
+</AnchorPane>
