@@ -1,0 +1,28 @@
+
+
+
+<form [formGroup]="serverConfiguration" (ngSubmit)="submitForm()">
+    <div>
+      <label for="hostname">Hostname</label>
+      <input id="hostname" type="text" formControlName="hostname" required>
+    </div>
+    <div>
+      <label for="username">Username</label>
+      <input id="username" type="text" formControlName="username" required>
+    </div>
+    <div>
+      <label for="port">Port</label>
+      <input id="port" type="number" formControlName="port" required>
+    </div>
+    <div>
+      <label for="status">Status</label>
+      <select id="status" formControlName="status" required>
+        <option value="true">True</option>
+        <option value="false">False</option>
+      </select>
+    </div>
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+  
